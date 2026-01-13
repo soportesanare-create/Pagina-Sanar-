@@ -14,99 +14,77 @@
   <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
 
   <style>
-    /* --- Sanaré: ajustes del widget de chat (launcher con logo + siempre visible) --- */
-    .n8n-chat,
-    .n8n-chat__container,
-    .n8n-chat__window,
-    .n8n-chat__launcher,
-    .n8n-chat-launcher,
-    .n8n-chat-launcher button {
-      z-index: 999999 !important;
-    }
+/* ===== Sanaré: Estilo para el botón REAL del chat (n8n) =====
+   Objetivo: que el botón que SÍ abre el chatbot se vea grande y pulsante.
+   Nota: si el launcher vive en Shadow DOM, este CSS puede no aplicar; por eso también lo forzamos vía JS. */
+.n8n-chat,
+.n8n-chat__container,
+.n8n-chat__window,
+.n8n-chat__launcher,
+.n8n-chat-launcher,
+.n8n-chat-launcher button{
+  z-index: 999999 !important;
+}
 
-    /* Botón flotante: círculo naranja + logo al centro */
-    .n8n-chat__launcher,
-    .n8n-chat-launcher,
-    .n8n-chat-launcher button,
-    button[aria-label*="chat" i],
-    button[aria-label*="abrir" i] {
-      background-color: rgba(248, 138, 122, 0.98) !important;
-      background-image: url('assets/img/sanare_s_mark.png') !important;
-      background-repeat: no-repeat !important;
-      background-position: center !important;
-      background-size: 68% 68% !important;
-      border: none !important;
-      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.18) !important;
-    }
-    /* Oculta el ícono original (si existe) para que se vea el logo */
-    .n8n-chat__launcher svg,
-    .n8n-chat-launcher svg,
-    .n8n-chat__launcher i,
-    .n8n-chat-launcher i {
-      opacity: 0 !important;
-    }
-  
-    /* Overlay del logo (por si el widget usa ícono interno que tapa el background) */
-    .sanare-launcher-branded {
-      position: relative !important;
-      overflow: hidden !important;
-    }
-    .sanare-launcher-branded .sanare-launcher-logo {
-      position: absolute;
-      inset: 0;
-      margin: auto;
-      width: 68%;
-      height: 68%;
-      object-fit: contain;
-      pointer-events: none;
-      z-index: 2;
-      display: block;
-    }
-    /* Esconde cualquier ícono interno */
-    .sanare-launcher-branded svg,
-    .sanare-launcher-branded i,
-    .sanare-launcher-branded span,
-    .sanare-launcher-branded .icon,
-    .sanare-launcher-branded [class*="icon" i] {
-      opacity: 0 !important;
-    }
+@keyframes sanarePulseShadow {
+  0%   { box-shadow: 0 18px 40px rgba(15,23,42,.22), 0 0 0 0 rgba(248,138,122,.35), 0 0 0 0 rgba(248,138,122,.18); }
+  70%  { box-shadow: 0 18px 40px rgba(15,23,42,.22), 0 0 0 18px rgba(248,138,122,0), 0 0 0 34px rgba(248,138,122,0); }
+  100% { box-shadow: 0 18px 40px rgba(15,23,42,.22), 0 0 0 22px rgba(248,138,122,0), 0 0 0 40px rgba(248,138,122,0); }
+}
+
+/* Fallback (Light DOM): agranda y aplica pulsación */
+.n8n-chat__launcher button,
+.n8n-chat-launcher button,
+.chat-window-toggle,
+.chat-window-toggle button{
+  width: 160px !important;
+  height: 160px !important;
+  border-radius: 999px !important;
+  background: #0f172a !important;
+  border: 10px solid rgba(248, 138, 122, 0.95) !important;
+  overflow: visible !important;
+  animation: sanarePulseShadow 1.45s ease-out infinite !important;
+}
+
+.n8n-chat__launcher button svg,
+.n8n-chat-launcher button svg,
+.chat-window-toggle svg,
+.chat-window-toggle button svg{
+  display: none !important;
+}
+
+@media (max-width: 480px){
+  .n8n-chat__launcher button,
+  .n8n-chat-launcher button,
+  .chat-window-toggle,
+  .chat-window-toggle button{
+    width: 146px !important;
+    height: 146px !important;
+  }
+}
 
 
-    /* --- Sanaré: botón flotante WhatsApp junto al chat --- */
-    .sanare-wa-float{
-      position: fixed;
-      right: 96px; /* a la izquierda del botón del chat */
-      bottom: 24px;
-      width: 56px;
-      height: 56px;
-      border-radius: 999px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #25D366;
-      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.18);
-      z-index: 999999 !important;
-      text-decoration: none;
-      transform: translateZ(0);
-    }
-    .sanare-wa-float:hover{
-      filter: brightness(0.95);
-    }
-    .sanare-wa-float svg{
-      width: 28px;
-      height: 28px;
-      fill: #ffffff;
-      display:block;
-    }
-    @media (max-width: 480px){
-      .sanare-wa-float{
-        right: 88px;
-        bottom: 18px;
-        width: 54px;
-        height: 54px;
-      }
-    }
-  </style>
+/* === Sanaré Chatbot: icon image centered inside the launcher === */
+#n8n-chat .chat-window-toggle{
+  position: relative !important;
+  overflow: visible !important;
+}
+#n8n-chat .chat-window-toggle svg{
+  opacity: 0 !important; /* keep for click area but hide default bubble */
+}
+#n8n-chat .chat-window-toggle::after{
+  content: "";
+  position: absolute;
+  inset: 8%;
+  background-image: url("assets/img/sanare_chatbot_icon.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  pointer-events: none;
+  filter: drop-shadow(0 8px 18px rgba(0,0,0,.18));
+}
+
+</style>
 
 
   <!-- Favicons -->
@@ -264,18 +242,21 @@
           <h2>Tu infusión, en un lugar que se siente como casa.</h2>
           <p>
             Desde el primer contacto, nuestro equipo de coordinación clínica te acompaña para entender tu diagnóstico,
-            validar tu esquema de tratamiento y coordinar la logística con tu médico y aseguradora.
+            validar tu esquema de tratamiento y coordinar la logística con tu médico y aseguradora, incluyendo el apoyo integral en la gestión de documentación, trámites y autorizaciones durante todo tu tratamiento.
           </p>
           <ul class="checklist">
             <li>Salas de infusión cómodas, silenciosas y con Wi-Fi.</li>
             <li>Monitoreo continuo de signos vitales durante todo el tratamiento.</li>
             <li>Farmacovigilancia y trazabilidad completa de cada frasco.</li>
             <li>Equipo de enfermería certificado en manejo oncológico.</li>
+          
+            <li>Terapias costo-ahorradoras para optimizar el costo sin comprometer el resultado clínico.</li>
+            <li>Apoyo integral en la gestión de documentación ante aseguradoras: trámites, autorizaciones y seguimiento durante todo el tratamiento.</li>
           </ul>
           <div class="highlight-box">
             <span class="highlight-title">¿Es tu primera infusión?</span>
             <p>Agenda una llamada informativa sin costo para entender tu esquema, tiempos de administración y requisitos.</p>
-            <a href="#contacto" class="link-arrow">Quiero que me llamen</a>
+            <a href="#contacto" class="btn btn-primary btn-cta btn-cta-pulse">Quiero que me llamen</a>
           </div>
         </div>
       </div>
@@ -297,6 +278,11 @@
               <p>Gestionamos agenda, infusión, farmacovigilancia y reporte de eventos para mantenerte siempre informado.</p>
             </div>
             <div class="feature-card">
+              <h3>Gestión con aseguradoras</h3>
+              <p>Apoyamos con la documentación y requisitos administrativos para facilitar autorizaciones y reducir fricción para tu equipo.</p>
+            </div>
+
+            <div class="feature-card">
               <h3>Trazabilidad</h3>
               <p>Código de lote, fecha de caducidad, cadena de frío y bitácoras de enfermería en un solo reporte.</p>
             </div>
@@ -305,7 +291,7 @@
               <p>Atención a pacientes asegurados, particulares y convenios con instituciones.</p>
             </div>
           </div>
-          <a href="#contacto" class="btn btn-outline">
+          <a href="#contacto" class="btn btn-primary btn-cta btn-cta-pulse">
             Quiero referir a un paciente
           </a>
         </div>
@@ -417,6 +403,17 @@
               </div>
             </li>
           </ul>
+          <div class="feature-grid experience-grid">
+            <div class="feature-card">
+              <h3>Alianzas estratégicas</h3>
+              <p>Colaboramos con redes de especialistas, instituciones y aliados clínicos para dar continuidad al tratamiento y agilizar procesos clave.</p>
+            </div>
+            <div class="feature-card">
+              <h3>Programas de Soporte al Paciente (PSP)</h3>
+              <p>Integramos PSP para acompañamiento clínico y administrativo; por ejemplo, <strong>MAZ Salud</strong> de AstraZeneca (cuando aplica).</p>
+            </div>
+          </div>
+
         </div>
         <div class="split-media reveal delay-1">
           <video class="split-image shadow-xl" autoplay muted loop playsinline preload="metadata" poster="assets/img/clinica-sanare.png">
@@ -654,185 +651,252 @@
 
   <script src="assets/js/main.js?v=navh1"></script>
 
-  <!-- n8n embedded chat widget (Lorey) -->
-  <script type="module">
-    const SANARE_CHAT_CONFIG = {
-      webhookUrl: 'https://winnieadame.app.n8n.cloud/webhook/8bcad6a0-ed62-4136-8284-d64e53fdaae5/chat',
-      defaultLanguage: 'es',
-      initialMessages: [
-        '¡Hola! 👋',
-        'Soy Lorey, tu asistente virtual de Sanaré. ¿En qué puedo ayudarte hoy?'
-      ],
-      i18n: {
-        es: {
-          title: '¡Hola! 👋',
-          subtitle: 'Inicia un chat. Estamos para ayudarte 24/7.',
-          footer: '',
-          getStarted: 'Nueva conversación',
-          inputPlaceholder: 'Escribe tu pregunta…',
-        },
+    <!-- n8n embedded chat widget (Lorey) -->
+<script type="module">
+  const SANARE_CHAT_CONFIG = {
+    webhookUrl: 'https://winnieadame.app.n8n.cloud/webhook/8bcad6a0-ed62-4136-8284-d64e53fdaae5/chat',
+    defaultLanguage: 'es',
+    initialMessages: [
+      '¡Hola! 👋',
+      'Soy Lorey, tu asistente virtual de Sanaré. ¿En qué puedo ayudarte hoy?'
+    ],
+    i18n: {
+      es: {
+        title: '¡Hola! 👋',
+        subtitle: 'Inicia un chat. Estamos para ayudarte 24/7.',
+        footer: '',
+        getStarted: 'Nueva conversación',
+        inputPlaceholder: 'Escribe tu pregunta…',
       },
-    };
+    },
+  };
 
-    const findLauncher = () => {
-      const selectors = [
-        '.n8n-chat__launcher',
-        '.n8n-chat-launcher',
-        '.n8n-chat-launcher button',
-        'button[aria-label*="chat" i]',
-        'button[aria-label*="abrir" i]',
-        'button[aria-label*="open" i]',
-      ];
-      for (const sel of selectors) {
-        const el = document.querySelector(sel);
-        if (el) return el;
+  // Si quedó algún botón viejo, lo quitamos.
+  function removeOldFab() {
+    const old = document.getElementById('sanareChatFab');
+    if (old) old.remove();
+  }
+
+  function normalizeToLauncher(el) {
+    if (!el) return null;
+
+    // Si ya es botón, perfecto
+    if (el.tagName && el.tagName.toLowerCase() === 'button') return el;
+
+    // En algunas versiones del widget, el launcher es un DIV (.chat-window-toggle)
+    if (el.classList && el.classList.contains('chat-window-toggle')) return el;
+
+    // Si trae role=button o aria-label, puede ser el launcher
+    if (el.getAttribute && (el.getAttribute('role') === 'button' || el.getAttribute('aria-label'))) return el;
+
+    // Intentar encontrar un botón hijo o ancestro
+    return el.querySelector?.('button') || el.closest?.('button') || null;
+  }
+
+  // Encuentra el launcher REAL del widget (aunque esté en Shadow DOM)
+function getNativeLauncherDeep() {
+  const selectors = [
+    // Clases comunes (versiones distintas del widget)
+    '.chat-window-toggle',
+    '#n8n-chat .chat-window-toggle',
+    '.chat-window-wrapper .chat-window-toggle',
+    '.n8n-chat__launcher button',
+    '.n8n-chat__launcher',
+    '.n8n-chat-launcher button',
+    '.n8n-chat-launcher',
+    // Fallback por atributos
+    'button[aria-label*="chat" i]',
+    'button[aria-label*="mensaje" i]',
+    'button[title*="chat" i]',
+    '[role="button"][aria-label*="chat" i]'
+  ];
+
+  // 1) Light DOM
+  for (const sel of selectors) {
+    try {
+      const cand = document.querySelector(sel);
+      const btn = normalizeToLauncher(cand);
+      if (btn) return btn;
+    } catch (_) {}
+  }
+
+  // 2) Shadow DOM (recorrido)
+  const stack = [document.documentElement];
+  const seen = new Set();
+
+  while (stack.length) {
+    const el = stack.pop();
+    if (!el || seen.has(el)) continue;
+    seen.add(el);
+
+    try { for (const c of Array.from(el.children || [])) stack.push(c); } catch(_){}
+
+    const sr = el.shadowRoot;
+    if (sr) {
+      // Buscar dentro del shadow root
+      for (const sel of selectors.concat(['button'])) {
+        try {
+          const cand = sr.querySelector(sel);
+          const btn = normalizeToLauncher(cand);
+          if (btn) return btn;
+        } catch(_){}
       }
-      return null;
-    };
 
-    const normalizeLauncher = (el) => {
-      if (!el) return null;
-      // El widget a veces retorna un contenedor; buscamos el botón real.
-      if (el.tagName && el.tagName.toLowerCase() === 'button') return el;
-      const btn = el.querySelector?.('button');
-      return btn || el;
-    };
-
-
-    const brandLauncher = (launcherEl) => {
-      const btn = normalizeLauncher(launcherEl);
-      if (!btn || btn.dataset.sanareLauncherBranded === 'true') return;
-      btn.dataset.sanareLauncherBranded = 'true';
-      btn.classList?.add('sanare-launcher-branded');
-
-      // Estilos base
-      btn.style.position = 'relative';
-      btn.style.backgroundColor = 'rgba(248, 138, 122, 0.98)';
-      btn.style.backgroundImage = "url('assets/img/sanare_s_mark.png')";
-      btn.style.backgroundRepeat = 'no-repeat';
-      btn.style.backgroundPosition = 'center';
-      btn.style.backgroundSize = '68% 68%';
-      btn.style.border = 'none';
-      btn.style.boxShadow = '0 18px 40px rgba(15, 23, 42, 0.18)';
-
-      // Oculta íconos internos que puedan tapar el logo
+      // Recorrer shadowRoots anidados
       try {
-        btn.querySelectorAll('svg, i, span, [class*="icon" i]').forEach((el) => {
-          el.style.opacity = '0';
-        });
-      } catch (_) {}
-
-      // Overlay del logo (más confiable que background en algunos builds)
-      if (!btn.querySelector('.sanare-launcher-logo')) {
-        const img = document.createElement('img');
-        img.src = 'assets/img/sanare_s_mark.png';
-        img.alt = 'Sanaré';
-        img.className = 'sanare-launcher-logo';
-        btn.appendChild(img);
-      }
-    };
-
-    const openChat = (launcherEl) => {
-      const btn = normalizeLauncher(launcherEl);
-      if (!btn) return;
-      const expanded = btn.getAttribute?.('aria-expanded');
-      // Algunos builds no usan aria-expanded; igual intentamos abrir una vez.
-      if (expanded !== 'true') btn.click?.();
-    };
-
-    const watchAndOpen = () => {
-      // intenta varias veces por si el widget tarda en inyectarse
-      let attempts = 0;
-      const tick = () => {
-        attempts += 1;
-        const launcher = findLauncher();
-        if (launcher) {
-          brandLauncher(launcher);
-          openChat(launcher); // abre automáticamente
-          return true;
+        for (const node of Array.from(sr.querySelectorAll('*'))) {
+          if (node.shadowRoot) stack.push(node);
         }
-        return false;
-      };
+      } catch(_){}
+    }
+  }
+  return null;
+}
 
-      if (tick()) return;
 
-      const obs = new MutationObserver(() => {
-        // Reintenta en cada inyección/cambio del DOM (el widget a veces re-renderiza el launcher)
-        tick();
-      });
-      obs.observe(document.documentElement, { childList: true, subtree: true, attributes: true });
+  function ensureStyleInRoot(root) {
+    const STYLE_ID = 'sanare-native-launcher-style';
+    try {
+      const existing = (root instanceof ShadowRoot)
+        ? root.getElementById?.(STYLE_ID) || root.querySelector?.('#' + STYLE_ID)
+        : document.getElementById(STYLE_ID);
+      if (existing) return;
 
-      // respaldo: reintentos y luego liberamos el observer
-      setTimeout(() => tick(), 6000);
-      setTimeout(() => obs.disconnect(), 12000);
-    };
-
-    const initWithCreateChat = (createChat) => {
-      try {
-        createChat(SANARE_CHAT_CONFIG);
-      } catch (e) {
-        console.error('[Sanaré] Error al inicializar chat:', e);
-      }
-      watchAndOpen();
-    };
-
-    const loadIifeFallback = () => {
-      const candidates = [
-        'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.iife.js',
-        'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.umd.js',
-        'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.js',
-      ];
-
-      const tryNext = (i = 0) => {
-        if (i >= candidates.length) {
-          console.error('[Sanaré] No se pudo cargar el widget de chat desde CDN.');
-          return;
+      const css = `
+        @keyframes sanarePulseShadow {
+          0%   { box-shadow: 0 18px 40px rgba(15,23,42,.22), 0 0 0 0 rgba(248,138,122,.35), 0 0 0 0 rgba(248,138,122,.18); }
+          70%  { box-shadow: 0 18px 40px rgba(15,23,42,.22), 0 0 0 18px rgba(248,138,122,0), 0 0 0 34px rgba(248,138,122,0); }
+          100% { box-shadow: 0 18px 40px rgba(15,23,42,.22), 0 0 0 22px rgba(248,138,122,0), 0 0 0 40px rgba(248,138,122,0); }
         }
-        const s = document.createElement('script');
-        s.src = candidates[i];
-        s.async = true;
-        s.onload = () => {
-          const createChat =
-            window.createChat ||
-            window.n8nChat?.createChat ||
-            window.N8NChat?.createChat ||
-            window.n8n?.createChat;
-
-          if (typeof createChat === 'function') {
-            initWithCreateChat(createChat);
-          } else {
-            // Si cargó pero no expuso createChat, probamos el siguiente
-            tryNext(i + 1);
+        .sanare-native-launcher{
+          width: 160px !important;
+          height: 160px !important;
+          border-radius: 999px !important;
+          background: #0f172a !important;
+          border: 10px solid rgba(248, 138, 122, 0.95) !important;
+          overflow: visible !important;
+          animation: sanarePulseShadow 1.45s ease-out infinite !important;
+          z-index: 999999 !important;
+        }
+        .sanare-native-launcher svg{ display:none !important; }
+        @media (max-width: 480px){
+          .sanare-native-launcher{
+            width: 146px !important;
+            height: 146px !important;
           }
-        };
-        s.onerror = () => tryNext(i + 1);
-        document.head.appendChild(s);
-      };
+        }
+      `;
 
-      tryNext(0);
+      const st = document.createElement('style');
+      st.id = STYLE_ID;
+      st.textContent = css;
+
+      if (root instanceof ShadowRoot) root.appendChild(st);
+      else document.head.appendChild(st);
+    } catch(_){}
+  }
+
+  function styleNativeLauncher() {
+    removeOldFab();
+
+    const btn = getNativeLauncherDeep();
+    if (!btn) return false;
+
+    const root = btn.getRootNode?.();
+    if (root) ensureStyleInRoot(root);
+
+    btn.classList.add('sanare-native-launcher');
+
+    // Robot como icono (sin romper el click)
+    btn.style.backgroundImage = "url('assets/img/chatbot_robot.png')";
+    btn.style.backgroundSize = 'cover';
+    btn.style.backgroundPosition = 'center';
+    btn.style.backgroundRepeat = 'no-repeat';
+
+    // Asegura que quede bien posicionado (sin moverlo a la izquierda)
+    btn.style.zIndex = '999999';
+
+    return true;
+  }
+
+  function watchForLauncher() {
+    // intento inicial
+    styleNativeLauncher();
+
+    const obs = new MutationObserver(() => styleNativeLauncher());
+    obs.observe(document.documentElement, { childList: true, subtree: true });
+    setTimeout(() => { try { obs.disconnect(); } catch(_){} }, 30000);
+  }
+
+  // Iniciar (ESM primero, fallback IIFE)
+  function initWithFactory(factory) {
+    try {
+      window.__SANARE_CHAT_INSTANCE = factory(SANARE_CHAT_CONFIG) || null;
+    } catch (e) {
+      console.error('[Sanaré] Error al inicializar chat:', e);
+    }
+    watchForLauncher();
+  }
+
+  function loadIifeFallback() {
+    const candidates = [
+      'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.iife.js',
+      'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.umd.js',
+      'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.js',
+    ];
+
+    const tryNext = (i = 0) => {
+      if (i >= candidates.length) {
+        console.error('[Sanaré] No se pudo cargar el widget de chat desde CDN.');
+        return;
+      }
+      const s = document.createElement('script');
+      s.src = candidates[i];
+      s.async = true;
+      s.onload = () => {
+        const factory =
+          window.Chatbot?.createWidget ||
+          window.Chatbot?.createChat ||
+          window.n8nChat?.createWidget ||
+          window.n8nChat?.createChat ||
+          window.N8NChat?.createWidget ||
+          window.N8NChat?.createChat ||
+          window.createWidget ||
+          window.createChat;
+
+        if (typeof factory === 'function') initWithFactory(factory);
+        else tryNext(i + 1);
+      };
+      s.onerror = () => tryNext(i + 1);
+      document.head.appendChild(s);
     };
+
+    tryNext(0);
+  }
+
+  (async () => {
+    removeOldFab();
+    // En cuanto exista el launcher, lo estilizamos
+    watchForLauncher();
 
     try {
       const mod = await import('https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js');
-      const createChat =
-        mod?.createChat ||
+      const factory =
+        mod?.default?.createWidget ||
+        mod?.createWidget ||
         mod?.default?.createChat ||
-        mod?.default;
+        mod?.createChat ||
+        (typeof mod?.default === 'function' ? mod.default : null);
 
-      if (typeof createChat !== 'function') throw new Error('createChat no encontrado en el módulo ESM');
-      initWithCreateChat(createChat);
+      if (typeof factory !== 'function') throw new Error('No se encontró createWidget/createChat en el módulo ESM');
+      initWithFactory(factory);
     } catch (err) {
       console.warn('[Sanaré] Falló el módulo ESM del chat, usando fallback IIFE.', err);
       loadIifeFallback();
     }
-  </script>
-
-  <!-- WhatsApp flotante (junto al chatbot) -->
-  <a class="sanare-wa-float" href="https://wa.me/525669998773?text=Hola%2C%20me%20interesa%20informaci%C3%B3n%20sobre%20la%20infusi%C3%B3n.%20%C2%BFMe%20podr%C3%ADas%20dar%20m%C3%A1s%20informaci%C3%B3n%2C%20por%20favor%3F" target="_blank" rel="noopener" aria-label="WhatsApp Sanaré">
-    <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
-      <path d="M13.601 2.326A7.854 7.854 0 0 0 8.007 0C3.58 0 0 3.58 0 8.006c0 1.41.369 2.78 1.07 3.99L0 16l4.132-1.082a7.98 7.98 0 0 0 3.875.989h.003c4.425 0 8.006-3.58 8.006-8.006a7.855 7.855 0 0 0-2.415-5.575zM8.01 14.55a6.61 6.61 0 0 1-3.363-.92l-.241-.144-2.452.643.654-2.386-.156-.245a6.56 6.56 0 0 1-1.007-3.49c0-3.626 2.957-6.584 6.584-6.584a6.56 6.56 0 0 1 4.66 1.931 6.57 6.57 0 0 1 1.924 4.66c0 3.626-2.957 6.584-6.584 6.584zm3.915-4.97c-.214-.107-1.274-.627-1.472-.699-.197-.072-.34-.107-.482.107-.142.214-.554.699-.68.843-.125.144-.251.16-.465.053-.214-.106-.903-.333-1.72-1.062-.635-.566-1.064-1.266-1.19-1.48-.125-.214-.013-.33.094-.437.096-.096.214-.25.32-.375.108-.125.143-.214.214-.357.072-.144.036-.268-.018-.375-.054-.107-.482-1.163-.66-1.59-.173-.414-.35-.357-.482-.364l-.412-.007c-.142 0-.375.053-.572.268-.197.214-.75.733-.75 1.786 0 1.054.768 2.07.875 2.214.107.144 1.51 2.306 3.66 3.234.512.22.91.352 1.22.45.512.162.978.139 1.346.084.41-.061 1.274-.52 1.456-1.023.18-.503.18-.934.125-1.023-.054-.09-.197-.144-.41-.25z"></path>
-    </svg>
-  </a>
+  })();
+</script>
 
 </body>
+
 </html>
