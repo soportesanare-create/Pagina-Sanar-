@@ -84,6 +84,110 @@
   filter: drop-shadow(0 8px 18px rgba(0,0,0,.18));
 }
 
+
+/* ===== Sección Representantes (embed) ===== */
+.reps-embed iframe{
+  width: 100%;
+  height: 760px;
+  border: 0;
+  display: block;
+}
+@media (max-width: 768px){
+  .reps-embed iframe{
+    height: 880px;
+  }
+}
+
+
+/* ===== Modal (Representantes) ===== */
+body.modal-open { overflow: hidden; }
+
+.modal{
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity .18s ease, visibility .18s ease;
+}
+.modal.open{
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+.modal-backdrop{
+  position: absolute;
+  inset: 0;
+  background: rgba(2,6,23,.55);
+  backdrop-filter: blur(2px);
+}
+.modal-dialog{
+  position: relative;
+  width: min(1120px, 96vw);
+  height: min(78vh, 780px);
+  background: #fff;
+  border-radius: 22px;
+  overflow: hidden;
+  border: 1px solid rgba(15,23,42,.08);
+  box-shadow: 0 28px 70px rgba(2,6,23,.35);
+  display: flex;
+  flex-direction: column;
+}
+.modal-header{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap: 16px;
+  padding: 18px 18px 12px;
+  background: linear-gradient(180deg, rgba(245, 232, 229, .95), rgba(255,255,255,.92));
+  border-bottom: 1px solid rgba(15,23,42,.06);
+}
+.modal-title .eyebrow{ margin: 0 0 6px; }
+.modal-title h3{
+  margin: 0;
+  font-size: 20px;
+  line-height: 1.2;
+}
+.modal-close{
+  appearance:none;
+  border:0;
+  background: rgba(15,23,42,.06);
+  color: #0f172a;
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  font-size: 26px;
+  line-height: 1;
+  cursor: pointer;
+}
+.modal-close:hover{ background: rgba(15,23,42,.10); }
+.modal-body{
+  flex: 1;
+  padding: 0;
+  background: #fff;
+}
+.modal-body iframe{
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.modal-footer{
+  padding: 12px 18px 16px;
+  background: #fff;
+  border-top: 1px solid rgba(15,23,42,.06);
+  display: flex;
+  justify-content: flex-end;
+}
+@media (max-width: 640px){
+  .modal{ padding: 14px; }
+  .modal-dialog{ height: min(84vh, 820px); border-radius: 18px; }
+  .modal-title h3{ font-size: 18px; }
+}
 </style>
 
 
@@ -109,6 +213,7 @@
         <a href="#medicos">Médicos</a>
         <a href="#tratamientos">Tratamientos</a>
         <a href="#experiencia">Experiencia</a>
+        <a href="#representantes">Representantes</a>
         <a href="#sedes">Sedes</a>
         <a href="#contacto">Contacto</a>
       </nav>
@@ -201,7 +306,7 @@
       </div>
     </section>
 
-    <!-- ASEGURADORAS -->
+<!-- ASEGURADORAS -->
     <section class="section insurers">
       <div class="insurers-bg-video" aria-hidden="true">
         <video class="insurers-video" autoplay muted loop playsinline preload="metadata">
@@ -576,10 +681,8 @@
 
               <div class="sgc-viewport">
                 <div class="sgc-track">
-                  <div class="sgc-slide"><img src="assets/img/gallery-infusion-1.webp" alt="Sala de infusión Sanaré con paciente y personal de enfermería" loading="lazy" decoding="async"></div>
-                  <div class="sgc-slide"><img src="assets/img/gallery-infusion-2.webp" alt="Paciente durante sesión de infusión acompañado por personal clínico" loading="lazy" decoding="async"></div>
-                  <div class="sgc-slide"><img src="assets/img/gallery-infusion-3.webp" alt="Paciente en sillón de infusión en un ambiente confortable" loading="lazy" decoding="async"></div>
-                  <div class="sgc-slide"><img src="assets/img/gallery-infusion-4.webp" alt="Paciente sonriendo durante la infusión con acompañamiento" loading="lazy" decoding="async"></div>
+                  <div class="sgc-slide"><img src="assets/img/gallery-panorama-narvarte.jpg" alt="Sala de infusión Sanaré (panorámica)" loading="lazy" decoding="async"></div>
+                  <div class="sgc-slide"><img src="assets/img/gallery-panorama-toluca.jpg" alt="Sala de infusión Sanaré (panorámica)" loading="lazy" decoding="async"></div>
                 </div>
               </div>
 
@@ -649,7 +752,36 @@
     <span class="toast-message" id="toastMessage"></span>
   </div>
 
-  <script src="assets/js/main.js?v=navh1"></script>
+  
+    <!-- Modal: Representantes (no afecta la visibilidad de módulos) -->
+    <div class="modal" id="repsModal" aria-hidden="true">
+      <div class="modal-backdrop" data-reps-close="true"></div>
+      <div class="modal-dialog" role="dialog" aria-modal="true" aria-label="Representantes Sanaré">
+        <div class="modal-header">
+          <div class="modal-title">
+            <span class="eyebrow">Representantes</span>
+            <h3>Conoce a nuestro equipo</h3>
+          </div>
+          <button class="modal-close" id="repsModalClose" aria-label="Cerrar">×</button>
+        </div>
+        <div class="modal-body">
+          <iframe
+            id="repsModalFrame"
+            src="https://soporteti-desing.github.io/sanare-kam/"
+            title="Representantes Sanaré"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+        <div class="modal-footer">
+          <a class="btn btn-ghost" href="https://soporteti-desing.github.io/sanare-kam/" target="_blank" rel="noopener">
+            Ver en pantalla completa
+          </a>
+        </div>
+      </div>
+    </div>
+
+<script src="assets/js/main.js?v=navh1"></script>
 
     <!-- n8n embedded chat widget (Lorey) -->
 <script type="module">
