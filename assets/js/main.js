@@ -15,10 +15,45 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Scroll suave para links internos
+  
+  // Modal: Representantes
+  const repsModal = document.getElementById("repsModal");
+  const repsCloseBtn = document.getElementById("repsModalClose");
+  const repsBackdrop = repsModal ? repsModal.querySelector("[data-reps-close]") : null;
+
+  function openRepsModal() {
+    if (!repsModal) return;
+    repsModal.classList.add("open");
+    repsModal.setAttribute("aria-hidden", "false");
+    body.classList.add("modal-open");
+  }
+  function closeRepsModal() {
+    if (!repsModal) return;
+    repsModal.classList.remove("open");
+    repsModal.setAttribute("aria-hidden", "true");
+    body.classList.remove("modal-open");
+  }
+
+  if (repsCloseBtn) repsCloseBtn.addEventListener("click", closeRepsModal);
+  if (repsBackdrop) repsBackdrop.addEventListener("click", closeRepsModal);
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && repsModal && repsModal.classList.contains("open")) {
+      closeRepsModal();
+    }
+  });
+
+
+// Scroll suave para links internos
   document.querySelectorAll('a[href^="#"]').forEach((link) => {
     link.addEventListener("click", (e) => {
       const targetId = link.getAttribute("href");
+      if (targetId === "#representantes") {
+        e.preventDefault();
+        body.classList.remove("nav-open");
+        openRepsModal();
+        return;
+      }
+
       const targetEl = document.querySelector(targetId);
       if (targetEl) {
         e.preventDefault();
