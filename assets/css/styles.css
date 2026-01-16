@@ -1657,3 +1657,8 @@ position: absolute;
 
 /* === Ajuste solicitado: ocultar cifras del hero === */
 .hero-meta{display:none !important;}
+
+/* Ocultar el bloque de indicadores (4.9★, +800, +2) en la sección Experiencia, sin eliminarlo del HTML */
+.pill-stats {
+  display: none !important;
+}
