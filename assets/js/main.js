@@ -233,10 +233,222 @@ document.addEventListener("DOMContentLoaded", () => {
   const mapTitle = document.getElementById("mapModalTitle");
   const mapOpenLink = document.getElementById("mapModalOpen");
   const mapCloseBtn = document.getElementById("mapModalClose");
+  const sedeGalleryTrack = document.getElementById("sedeGalleryTrack");
+  const sedeGalleryThumbs = document.getElementById("sedeGalleryThumbs");
+  const sedeGalleryMeta = document.getElementById("sedeGalleryMeta");
+  const sedeGalleryPrev = document.getElementById("sedeGalleryPrev");
+  const sedeGalleryNext = document.getElementById("sedeGalleryNext");
+
+  const sedeGalleryData = {
+  "morelia": [
+    "assets/img/sedes/morelia/morelia-001.webp",
+    "assets/img/sedes/morelia/morelia-002.webp",
+    "assets/img/sedes/morelia/morelia-003.webp",
+    "assets/img/sedes/morelia/morelia-004.webp",
+    "assets/img/sedes/morelia/morelia-005.webp",
+    "assets/img/sedes/morelia/morelia-006.webp",
+    "assets/img/sedes/morelia/morelia-007.webp",
+    "assets/img/sedes/morelia/morelia-008.webp",
+    "assets/img/sedes/morelia/morelia-009.webp",
+    "assets/img/sedes/morelia/morelia-010.webp",
+    "assets/img/sedes/morelia/morelia-011.webp",
+    "assets/img/sedes/morelia/morelia-012.webp",
+    "assets/img/sedes/morelia/morelia-014.webp",
+    "assets/img/sedes/morelia/morelia-015.webp",
+    "assets/img/sedes/morelia/morelia-016.webp",
+    "assets/img/sedes/morelia/morelia-017.webp",
+    "assets/img/sedes/morelia/morelia-018.webp",
+    "assets/img/sedes/morelia/morelia-019.webp",
+    "assets/img/sedes/morelia/morelia-020.webp",
+    "assets/img/sedes/morelia/morelia-021.webp",
+    "assets/img/sedes/morelia/morelia-022.webp",
+    "assets/img/sedes/morelia/morelia-023.webp"
+  ],
+  "narvarte": [
+    "assets/img/sedes/narvarte/narvarte-001.webp",
+    "assets/img/sedes/narvarte/narvarte-002.webp",
+    "assets/img/sedes/narvarte/narvarte-003.webp",
+    "assets/img/sedes/narvarte/narvarte-004.webp",
+    "assets/img/sedes/narvarte/narvarte-005.webp",
+    "assets/img/sedes/narvarte/narvarte-006.webp",
+    "assets/img/sedes/narvarte/narvarte-008.webp",
+    "assets/img/sedes/narvarte/narvarte-009.webp",
+    "assets/img/sedes/narvarte/narvarte-010.webp",
+    "assets/img/sedes/narvarte/narvarte-011.webp",
+    "assets/img/sedes/narvarte/narvarte-013.webp",
+    "assets/img/sedes/narvarte/narvarte-014.webp",
+    "assets/img/sedes/narvarte/narvarte-015.webp",
+    "assets/img/sedes/narvarte/narvarte-016.webp",
+    "assets/img/sedes/narvarte/narvarte-017.webp",
+    "assets/img/sedes/narvarte/narvarte-018.webp",
+    "assets/img/sedes/narvarte/narvarte-019.webp",
+    "assets/img/sedes/narvarte/narvarte-020.webp",
+    "assets/img/sedes/narvarte/narvarte-021.webp",
+    "assets/img/sedes/narvarte/narvarte-022.webp",
+    "assets/img/sedes/narvarte/narvarte-023.webp",
+    "assets/img/sedes/narvarte/narvarte-024.webp",
+    "assets/img/sedes/narvarte/narvarte-025.webp",
+    "assets/img/sedes/narvarte/narvarte-026.webp",
+    "assets/img/sedes/narvarte/narvarte-027.webp",
+    "assets/img/sedes/narvarte/narvarte-028.webp",
+    "assets/img/sedes/narvarte/narvarte-032.webp",
+    "assets/img/sedes/narvarte/narvarte-033.webp",
+    "assets/img/sedes/narvarte/narvarte-034.webp",
+    "assets/img/sedes/narvarte/narvarte-035.webp",
+    "assets/img/sedes/narvarte/narvarte-036.webp",
+    "assets/img/sedes/narvarte/narvarte-037.webp",
+    "assets/img/sedes/narvarte/narvarte-038.webp",
+    "assets/img/sedes/narvarte/narvarte-039.webp",
+    "assets/img/sedes/narvarte/narvarte-040.webp",
+    "assets/img/sedes/narvarte/narvarte-041.webp",
+    "assets/img/sedes/narvarte/narvarte-042.webp",
+    "assets/img/sedes/narvarte/narvarte-043.webp",
+    "assets/img/sedes/narvarte/narvarte-044.webp",
+    "assets/img/sedes/narvarte/narvarte-045.webp",
+    "assets/img/sedes/narvarte/narvarte-046.webp",
+    "assets/img/sedes/narvarte/narvarte-047.webp",
+    "assets/img/sedes/narvarte/narvarte-048.webp",
+    "assets/img/sedes/narvarte/narvarte-049.webp",
+    "assets/img/sedes/narvarte/narvarte-050.webp",
+  ],
+  "toluca": [
+    "assets/img/sedes/toluca/toluca-001.webp",
+    "assets/img/sedes/toluca/toluca-002.webp",
+    "assets/img/sedes/toluca/toluca-003.webp",
+    "assets/img/sedes/toluca/toluca-004.webp",
+    "assets/img/sedes/toluca/toluca-005.webp",
+    "assets/img/sedes/toluca/toluca-007.webp",
+    "assets/img/sedes/toluca/toluca-008.webp",
+    "assets/img/sedes/toluca/toluca-009.webp",
+    "assets/img/sedes/toluca/toluca-010.webp",
+    "assets/img/sedes/toluca/toluca-011.webp",
+    "assets/img/sedes/toluca/toluca-012.webp",
+    "assets/img/sedes/toluca/toluca-013.webp",
+    "assets/img/sedes/toluca/toluca-014.webp",
+    "assets/img/sedes/toluca/toluca-015.webp",
+    "assets/img/sedes/toluca/toluca-016.webp",
+    "assets/img/sedes/toluca/toluca-017.webp",
+    "assets/img/sedes/toluca/toluca-018.webp",
+    "assets/img/sedes/toluca/toluca-019.webp",
+    "assets/img/sedes/toluca/toluca-020.webp",
+    "assets/img/sedes/toluca/toluca-021.webp",
+    "assets/img/sedes/toluca/toluca-022.webp",
+    "assets/img/sedes/toluca/toluca-023.webp",
+    "assets/img/sedes/toluca/toluca-024.webp",
+    "assets/img/sedes/toluca/toluca-025.webp",
+    "assets/img/sedes/toluca/toluca-026.webp",
+    "assets/img/sedes/toluca/toluca-027.webp",
+    "assets/img/sedes/toluca/toluca-028.webp",
+    "assets/img/sedes/toluca/toluca-029.webp",
+    "assets/img/sedes/toluca/toluca-030.webp",
+    "assets/img/sedes/toluca/toluca-031.webp",
+    "assets/img/sedes/toluca/toluca-032.webp",
+    "assets/img/sedes/toluca/toluca-033.webp",
+    "assets/img/sedes/toluca/toluca-034.webp",
+    "assets/img/sedes/toluca/toluca-035.webp",
+    "assets/img/sedes/toluca/toluca-036.webp",
+    "assets/img/sedes/toluca/toluca-037.webp",
+    "assets/img/sedes/toluca/toluca-038.webp",
+    "assets/img/sedes/toluca/toluca-039.webp",
+    "assets/img/sedes/toluca/toluca-040.webp",
+    "assets/img/sedes/toluca/toluca-041.webp",
+    "assets/img/sedes/toluca/toluca-042.webp",
+    "assets/img/sedes/toluca/toluca-043.webp",
+    "assets/img/sedes/toluca/toluca-044.webp",
+    "assets/img/sedes/toluca/toluca-045.webp",
+    "assets/img/sedes/toluca/toluca-046.webp",
+    "assets/img/sedes/toluca/toluca-047.webp",
+    "assets/img/sedes/toluca/toluca-048.webp",
+    "assets/img/sedes/toluca/toluca-049.webp",
+    "assets/img/sedes/toluca/toluca-050.webp",
+    "assets/img/sedes/toluca/toluca-051.webp",
+    "assets/img/sedes/toluca/toluca-052.webp",
+    "assets/img/sedes/toluca/toluca-053.webp",
+    "assets/img/sedes/toluca/toluca-054.webp",
+    "assets/img/sedes/toluca/toluca-055.webp",
+    "assets/img/sedes/toluca/toluca-056.webp",
+    "assets/img/sedes/toluca/toluca-057.webp",
+    "assets/img/sedes/toluca/toluca-058.webp",
+    "assets/img/sedes/toluca/toluca-059.webp",
+    "assets/img/sedes/toluca/toluca-060.webp",
+    "assets/img/sedes/toluca/toluca-061.webp",
+    "assets/img/sedes/toluca/toluca-062.webp",
+    "assets/img/sedes/toluca/toluca-063.webp"
+  ]
+};
 
   let lastFocusedEl = null;
+  let sedeGalleryTimer = null;
+  let currentGalleryIndex = 0;
 
-  const openMapModal = ({ title, address, href }) => {
+  const stopSedeGalleryAutoplay = () => {
+    if (sedeGalleryTimer) {
+      clearInterval(sedeGalleryTimer);
+      sedeGalleryTimer = null;
+    }
+  };
+
+  const renderSedeGallery = (sedeKey, title, startIndex = 0) => {
+    if (!sedeGalleryTrack || !sedeGalleryThumbs || !sedeGalleryMeta) return;
+    const images = sedeGalleryData[sedeKey] || [];
+    currentGalleryIndex = Math.max(0, Math.min(startIndex, Math.max(images.length - 1, 0)));
+
+    sedeGalleryTrack.innerHTML = images.map((src, index) => `
+      <div class="sede-gallery-slide${index === currentGalleryIndex ? ' is-active' : ''}" data-index="${index}">
+        <img src="${src}" alt="Foto ${index + 1} de ${title || 'la sede'}" loading="lazy" decoding="async">
+      </div>
+    `).join("");
+
+    sedeGalleryThumbs.innerHTML = images.map((src, index) => `
+      <button class="sede-thumb${index === currentGalleryIndex ? ' is-active' : ''}" type="button" data-index="${index}" aria-label="Ver foto ${index + 1}">
+        <img src="${src}" alt="Miniatura ${index + 1}" loading="lazy" decoding="async">
+      </button>
+    `).join("");
+
+    const updateGallery = (nextIndex) => {
+      const slides = Array.from(sedeGalleryTrack.querySelectorAll('.sede-gallery-slide'));
+      const thumbs = Array.from(sedeGalleryThumbs.querySelectorAll('.sede-thumb'));
+      if (!slides.length) {
+        sedeGalleryMeta.textContent = 'Sin fotos';
+        return;
+      }
+      currentGalleryIndex = (nextIndex + slides.length) % slides.length;
+      slides.forEach((slide, idx) => slide.classList.toggle('is-active', idx === currentGalleryIndex));
+      thumbs.forEach((thumb, idx) => thumb.classList.toggle('is-active', idx === currentGalleryIndex));
+      sedeGalleryMeta.textContent = `${currentGalleryIndex + 1} / ${slides.length}`;
+      const activeThumb = thumbs[currentGalleryIndex];
+      if (activeThumb) activeThumb.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
+    };
+
+    sedeGalleryThumbs.querySelectorAll('.sede-thumb').forEach((thumb) => {
+      thumb.addEventListener('click', () => {
+        updateGallery(Number(thumb.dataset.index || 0));
+        stopSedeGalleryAutoplay();
+      });
+    });
+
+    if (sedeGalleryPrev) {
+      sedeGalleryPrev.onclick = () => {
+        updateGallery(currentGalleryIndex - 1);
+        stopSedeGalleryAutoplay();
+      };
+    }
+
+    if (sedeGalleryNext) {
+      sedeGalleryNext.onclick = () => {
+        updateGallery(currentGalleryIndex + 1);
+        stopSedeGalleryAutoplay();
+      };
+    }
+
+    updateGallery(currentGalleryIndex);
+    stopSedeGalleryAutoplay();
+    if (images.length > 1) {
+      sedeGalleryTimer = setInterval(() => updateGallery(currentGalleryIndex + 1), 4200);
+    }
+  };
+
+  const openMapModal = ({ title, address, href, sedeKey }) => {
     if (!mapModal || !mapFrame || !mapTitle || !mapOpenLink) return;
 
     const safeHref = typeof href === "string" && href.startsWith("http") ? href : "#";
@@ -245,12 +457,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     mapTitle.textContent = safeTitle;
     mapOpenLink.href = safeHref;
-
-    // Embed sin API key (Google Maps)
-    const embedSrc =
-      "https://www.google.com/maps?q=" + encodeURIComponent(safeAddress) + "&output=embed";
-
-    mapFrame.src = embedSrc;
+    mapFrame.src = "https://www.google.com/maps?q=" + encodeURIComponent(safeAddress) + "&output=embed";
+    renderSedeGallery(sedeKey || "", safeTitle, 0);
 
     lastFocusedEl = document.activeElement;
     document.body.classList.add("modal-open");
@@ -265,9 +473,8 @@ document.addEventListener("DOMContentLoaded", () => {
     mapModal.classList.remove("is-open");
     mapModal.setAttribute("aria-hidden", "true");
     document.body.classList.remove("modal-open");
-
-    // Detener carga del iframe
     mapFrame.src = "about:blank";
+    stopSedeGalleryAutoplay();
 
     if (lastFocusedEl && typeof lastFocusedEl.focus === "function") {
       lastFocusedEl.focus();
@@ -275,7 +482,6 @@ document.addEventListener("DOMContentLoaded", () => {
     lastFocusedEl = null;
   };
 
-  // Click en "Ver detalles" -> abre modal con mapa
   document.querySelectorAll(".sede-details").forEach((link) => {
     link.addEventListener("click", (e) => {
       if (!mapModal) return;
@@ -287,32 +493,30 @@ document.addEventListener("DOMContentLoaded", () => {
         title: link.getAttribute("data-title") || "Ubicación",
         address,
         href: link.getAttribute("href") || "#",
+        sedeKey: link.getAttribute("data-sede") || "",
       });
     });
   });
 
-  
-  // Pins del mapa (abre el modal de mapa al hacer click)
   const sedePins = document.querySelectorAll(".sede-pin");
   if (sedePins.length > 0) {
     sedePins.forEach((pin) => {
       pin.addEventListener("click", (e) => {
-        // Evita que el click afecte otros handlers
         e.preventDefault();
         e.stopPropagation();
 
         const title = pin.getAttribute("data-title") || pin.getAttribute("aria-label") || "Ubicación";
         const address = pin.getAttribute("data-address") || "";
         const href = pin.getAttribute("data-href") || "#";
+        const sedeKey = pin.getAttribute("data-sede") || "";
 
         if (address) {
-          openMapModal({ title, address, href });
+          openMapModal({ title, address, href, sedeKey });
         }
       });
     });
   }
 
-// Cerrar modal
   if (mapCloseBtn) {
     mapCloseBtn.addEventListener("click", closeMapModal);
   }
