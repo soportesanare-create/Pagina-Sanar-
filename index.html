@@ -10,6 +10,22 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/styles.css?v=navh1" />
   
+  <style>
+    /* INTEGRACIÓN HUB INTERACTIVO SANARÉ */
+    #tratamientos { background: #fff !important; overflow: hidden; }
+    .interactive-hub { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 2.5rem; margin-top: 3rem; }
+    .hub-item { transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s ease; position: relative; overflow: hidden; }
+    .hub-item:hover { transform: translateY(-10px); box-shadow: 0 40px 80px rgba(15, 23, 42, 0.15); }
+    .product-showcase { background: radial-gradient(circle at top left, #ffffff, #f1f5f9); border: 1px solid #e2e8f0; border-radius: 40px; padding: 4rem; display: flex; align-items: center; }
+    .galleries-showcase { background: #1d3b53; border-radius: 40px; padding: 4rem; display: flex; flex-direction: column; justify-content: space-between; color: white; }
+    .fan-gallery-stage { height: 380px; position: relative; display: flex; justify-content: center; align-items: center; perspective: 1500px; margin: 2rem 0; }
+    .fan-card { position: absolute; width: 420px; height: 280px; background: white; padding: 10px; border-radius: 12px; box-shadow: 0 15px 35px rgba(0,0,0,0.2); cursor: pointer; z-index: 10; }
+    .fan-card img { width: 100%; height: 100%; object-fit: cover; border-radius: 8px; }
+    .btn-sede.active { background: #f78a7a !important; color: white !important; border-color: #f78a7a !important; }
+    .sanare-modal-hub { position: fixed; inset: 0; background: rgba(15,23,42,0.98); display: none; justify-content: center; align-items: center; z-index: 10000; }
+    @media (max-width: 1024px) { .interactive-hub { grid-template-columns: 1fr; } .product-showcase { flex-direction: column; text-align: center; padding: 2rem; } .fan-card { width: 300px; height: 200px; } }
+  </style>
+  
   <!-- n8n embedded chat widget (Lorey) -->
   <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
 
@@ -413,58 +429,59 @@ body.modal-open { overflow: hidden; }
       </div>
     </section>
 
-    <!-- TRATAMIENTOS / ESPECIALIDADES -->
+    <!-- SECCIÓN INTERACTIVA CORE (CON VALOR AGREGADO) -->
     <section class="section" id="tratamientos">
       <div class="container">
-        <p class="eyebrow">Tratamientos &amp; Especialidades</p>
-        <div class="section-header">
-          <h2>Clínicas de infusión para distintas especialidades.</h2>
-          <p>Atendemos esquemas de tratamiento ambulatorio en múltiples áreas terapéuticas, con protocolos y rutas clínico-administrativas definidas.</p>
+        <p class="eyebrow" style="text-align: center;">Infraestructura & Tecnología</p>
+        <div class="section-header" style="text-align: center; max-width: 800px; margin: 0 auto 4rem;">
+          <h2 style="font-size: 2.8rem; line-height: 1.1;">Experiencia Sanaré: <span class="text-gradient">Tecnología</span> para tu bienestar.</h2>
+          <p>Hemos diseñado un entorno donde la ingeniería y el cuidado médico se unen para ofrecerte el máximo confort durante tu tratamiento.</p>
         </div>
-        <div class="chips-row">
-          <button class="chip chip-filter chip-active" data-filter="all">Todos</button>
-          <button class="chip chip-filter" data-filter="onco">Oncología</button>
-          <button class="chip chip-filter" data-filter="hema">Hematología</button>
-          <button class="chip chip-filter" data-filter="reuma">Reumatología</button>
-          <button class="chip chip-filter" data-filter="inmuno">Inmunología</button>
-        </div>
-        <div class="treatments-grid">
-          <article class="treatment-card" data-category="onco">
-            <h3>Oncología Médica</h3>
-            <p>Esquemas de quimioterapia, inmunoterapia y terapias blanco con monitoreo especializado y soporte integral.</p>
-            <ul>
-              <li>Protocolos antieméticos</li>
-              <li>Valoración previa</li>
-              <li>Coordinación con central de mezclas</li>
-            </ul>
-          </article>
-          <article class="treatment-card" data-category="hema">
-            <h3>Hematología</h3>
-            <p>Tratamientos IV para patologías hematológicas con enfoque en seguridad transfusional y seguimiento estricto.</p>
-            <ul>
-              <li>Infusión de anticuerpos monoclonales</li>
-              <li>Soporte con hemoderivados</li>
-            </ul>
-          </article>
-          <article class="treatment-card" data-category="reuma">
-            <h3>Reumatología</h3>
-            <p>Aplicación de biológicos y terapias de infusión para enfermedades autoinmunes.</p>
-            <ul>
-              <li>Esquemas de mantenimiento</li>
-              <li>Farmacovigilancia activa</li>
-            </ul>
-          </article>
-          <article class="treatment-card" data-category="inmuno">
-            <h3>Inmunología &amp; otras</h3>
-            <p>Inmunoglobulinas, antibióticos IV y otros esquemas ambulatorios bajo protocolos estructurados.</p>
-            <ul>
-              <li>Home infusion seleccionada</li>
-              <li>Coordinación con aseguradoras</li>
-            </ul>
-          </article>
+
+        <div class="interactive-hub">
+            <!-- BLOQUE SILLÓN -->
+            <div class="hub-item product-showcase">
+                <div style="flex: 1.2;">
+                    <h3 style="font-size: 2.2rem; color: #1d3b53; font-weight: 700;">Confort Supremo</h3>
+                    <p style="color: #6b7280; margin: 1rem 0 2rem;">Nuestro sillón oncológico de alta especialidad garantiza el descanso absoluto.</p>
+                    <ul class="checklist">
+                        <li>Soporte lumbar dinámico</li>
+                        <li>Material grado médico</li>
+                        <li>Ergonomía certificada</li>
+                    </ul>
+                </div>
+                <div style="flex: 1; text-align: right;">
+                    <img src="assets/img/recliner.png" alt="Sillón Sanaré" id="hub-chair-real" style="max-width: 130%; filter: drop-shadow(0 40px 80px rgba(0,0,0,0.1));">
+                </div>
+            </div>
+
+            <!-- BLOQUE SEDES -->
+            <div class="hub-item galleries-showcase">
+                <div>
+                    <h3 style="font-size: 2rem; color: white;">Nuestra Red</h3>
+                    <p style="color: rgba(255,255,255,0.7);">Explora nuestras clínicas interactivamente.</p>
+                </div>
+
+                <div class="sede-tabs-hub" style="display: flex; gap: 0.5rem; margin-top: 1.5rem;">
+                    <button class="btn-sede active" data-sede="narvarte" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; padding: 0.5rem 1rem; border-radius: 50px; cursor: pointer; font-size: 0.8rem;">Narvarte</button>
+                    <button class="btn-sede" data-sede="toluca" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; padding: 0.5rem 1rem; border-radius: 50px; cursor: pointer; font-size: 0.8rem;">Toluca</button>
+                    <button class="btn-sede" data-sede="morelia" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; padding: 0.5rem 1rem; border-radius: 50px; cursor: pointer; font-size: 0.8rem;">Morelia</button>
+                </div>
+
+                <div id="fan-gallery-real" class="fan-gallery-stage">
+                    <!-- Inyectado via JS -->
+                </div>
+
+                <a href="#contacto" class="btn btn-primary" style="background: #f78a7a; border: none; width: 100%; border-radius: 50px;">Agendar en sede</a>
+            </div>
         </div>
       </div>
     </section>
+
+    <!-- MODAL ZOOM HUB -->
+    <div id="modal-zoom-hub" class="sanare-modal-hub">
+        <img src="" id="modal-img-hub" style="max-width: 90%; max-height: 90vh; border-radius: 8px;">
+    </div>
 
     <!-- EXPERIENCIA -->
     <section class="section section-alt" id="experiencia">
@@ -1045,6 +1062,83 @@ function getNativeLauncherDeep() {
   })();
 </script>
 
-</body>
+  <!-- GSAP INTEGRATION FOR INTERACTIVE HUB -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script>
+    (function(){
+        const sedesData = {
+            narvarte: ['assets/narvarte/narvarte-001.webp', 'assets/narvarte/narvarte-017.webp', 'assets/narvarte/narvarte-027.webp', 'assets/narvarte/narvarte-038.webp', 'assets/narvarte/narvarte-045.webp'],
+            toluca: ['assets/toluca/toluca-002.webp', 'assets/toluca/toluca-009.webp', 'assets/toluca/toluca-011.webp', 'assets/toluca/toluca-014.webp', 'assets/toluca/toluca-060.webp', 'assets/toluca/toluca-061.webp'],
+            morelia: ['assets/morelia/morelia-001.webp', 'assets/morelia/morelia-005.webp', 'assets/morelia/morelia-010.webp', 'assets/morelia/morelia-018.webp', 'assets/morelia/morelia-021.webp']
+        };
 
+        const chair = document.getElementById('hub-chair-real');
+        const container = document.getElementById('fan-gallery-real');
+        const tabs = document.querySelectorAll('.btn-sede');
+        const modal = document.getElementById('modal-zoom-hub');
+        const modalImg = document.getElementById('modal-img-hub');
+
+        // Chair Float & Parallax
+        gsap.to(chair, { y: -25, duration: 4, repeat: -1, yoyo: true, ease: "sine.inOut" });
+        window.addEventListener('mousemove', (e) => {
+            const x = (e.clientX / window.innerWidth - 0.5) * 45;
+            gsap.to(chair, { x: -x, rotationY: x/12, duration: 1.5, ease: "power2.out" });
+        });
+
+        // Gallery Logic
+        let currentCards = [];
+        let dragX = 0, targetDragX = 0, isDragging = false, startX = 0;
+
+        function renderSede(name) {
+            container.innerHTML = '';
+            dragX = targetDragX = 0;
+            currentCards = sedesData[name].map((src, i) => {
+                const card = document.createElement('div');
+                card.className = 'fan-card';
+                card.innerHTML = `<img src="${src}">`;
+                container.appendChild(card);
+                card.onclick = () => { modalImg.src = src; modal.style.display = 'flex'; gsap.fromTo(modal, {opacity: 0}, {opacity: 1, duration: 0.4}); };
+                gsap.set(card, { opacity: 0, scale: 0.8, y: 120 });
+                return card;
+            });
+            spread();
+        }
+
+        function spread() {
+            currentCards.forEach((c, i) => {
+                const off = (i - (currentCards.length-1)/2) * 160 + dragX;
+                const rot = (i - (currentCards.length-1)/2) * 12 + (dragX * 0.05);
+                gsap.to(c, { x: off, y: 0, rotation: rot, opacity: 1, scale: 1, duration: 1.2, ease: "expo.out", delay: i*0.06 });
+            });
+        }
+
+        setInterval(() => { if(!isDragging) targetDragX = (Math.random()-0.5)*100; }, 5000);
+
+        container.onmousedown = (e) => { isDragging = true; startX = e.clientX; container.style.cursor = 'grabbing'; };
+        window.onmousemove = (e) => { if(isDragging) { targetDragX += (e.clientX - startX); startX = e.clientX; } };
+        window.onmouseup = () => { isDragging = false; container.style.cursor = 'default'; };
+
+        function loop() { dragX += (targetDragX - dragX) * 0.1; currentCards.forEach((c, i) => { const off = (i - (currentCards.length-1)/2) * 160 + dragX; const rot = (i - (currentCards.length-1)/2) * 12 + (dragX * 0.05); gsap.set(c, {x: off, rotation: rot}); }); requestAnimationFrame(loop); }
+        loop();
+
+        tabs.forEach(t => t.onclick = (e) => {
+            e.preventDefault();
+            tabs.forEach(b => b.classList.remove('active'));
+            t.classList.add('active');
+            gsap.to(currentCards, { opacity: 0, scale: 0.8, y: -100, duration: 0.6, onComplete: () => renderSede(t.dataset.sede)});
+        });
+
+        modal.onclick = () => gsap.to(modal, {opacity: 0, duration: 0.3, onComplete: () => modal.style.display = 'none'});
+
+        if(window.ScrollTrigger) {
+            ScrollTrigger.create({ trigger: "#tratamientos", start: "top center", onEnter: () => renderSede('narvarte'), once: true });
+        } else {
+            renderSede('narvarte');
+        }
+    })();
+  </script>
+
+  <script src="assets/js/main.js?v=navh1"></script>
+</body>
 </html>
