@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/styles.css?v=navh1" />
+  <link rel="stylesheet" href="assets/css/styles_v2.css" />
   
   <style>
     /* INTEGRACIÓN HUB INTERACTIVO SANARÉ */
@@ -23,8 +23,19 @@
     .fan-card img { width: 100%; height: 100%; object-fit: cover; border-radius: 8px; }
     .btn-sede.active { background: #f78a7a !important; color: white !important; border-color: #f78a7a !important; }
     .sanare-modal-hub { position: fixed; inset: 0; background: rgba(15,23,42,0.98); display: none; justify-content: center; align-items: center; z-index: 10000; }
-    @media (max-width: 1024px) { .interactive-hub { grid-template-columns: 1fr; } .product-showcase { flex-direction: column; text-align: center; padding: 2rem; } .fan-card { width: 300px; height: 200px; } }
+    @media (max-width: 768px) {
+      .interactive-hub { grid-template-columns: 1fr; gap: 1.5rem; margin-top: 1.5rem; }
+      .product-showcase { padding: 2rem 1.5rem; border-radius: 24px; }
+      .galleries-showcase { padding: 2rem 1.5rem; border-radius: 24px; }
+      #hub-chair-real { max-width: 280px !important; }
+    }
+    @media (max-width: 520px) {
+      .product-showcase { padding: 1.5rem 1rem; }
+      .galleries-showcase { padding: 1.5rem 1rem; }
+      .amenities-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+    }
   </style>
+
   
   <!-- n8n embedded chat widget (Lorey) -->
   <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
@@ -273,18 +284,47 @@ body.modal-open { overflow: hidden; }
   <main id="inicio">
     <!-- HERO -->
     <section class="hero">
-      <div class="hero-top-banner" aria-hidden="true">
-        <img src="assets/img/hero-banner-sanare.jpg" alt="Sanaré Clínica de Infusión">
+      <!-- HERO TOP BANNER: Carrusel limpio -->
+      <div id="heroBannerWrap" style="position:relative; width:100%; overflow:hidden; line-height:0;">
+        <!-- Imagen invisible para mantener la proporción responsiva -->
+        <img src="assets/img/1.jpg" style="width:100%; display:block; visibility:hidden; position:relative; pointer-events:none;">
+        
+        <img id="hb0" src="assets/img/1.jpg" alt="Banner Sanaré 1" style="width:100%; display:block; position:absolute; top:0; left:0; opacity:1; transition:opacity 1.2s ease;">
+        <img id="hb1" src="assets/img/2.jpg" alt="Banner Sanaré 2" style="width:100%; display:block; position:absolute; top:0; left:0; opacity:0; transition:opacity 1.2s ease;">
+        <img id="hb2" src="assets/img/3.jpg" alt="Banner Sanaré 3" style="width:100%; display:block; position:absolute; top:0; left:0; opacity:0; transition:opacity 1.2s ease;">
+        
+        <!-- Dots de navegación -->
+        <div style="position:absolute; bottom:14px; left:50%; transform:translateX(-50%); display:flex; gap:8px; z-index:10;">
+          <button class="hb-dot active" data-idx="0" style="width:10px;height:10px;border-radius:50%;background:#fff;border:none;opacity:0.9;cursor:pointer;padding:0;"></button>
+          <button class="hb-dot" data-idx="1" style="width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,0.45);border:none;cursor:pointer;padding:0;"></button>
+          <button class="hb-dot" data-idx="2" style="width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,0.45);border:none;cursor:pointer;padding:0;"></button>
+        </div>
+        <script>
+          (function(){
+            var slides = [document.getElementById('hb0'), document.getElementById('hb1'), document.getElementById('hb2')];
+            var dots   = document.querySelectorAll('.hb-dot');
+            var cur    = 0;
+            function goTo(n) {
+              slides[cur].style.opacity = '0';
+              dots[cur].style.background = 'rgba(255,255,255,0.45)';
+              cur = (n + slides.length) % slides.length;
+              slides[cur].style.opacity  = '1';
+              dots[cur].style.background = '#fff';
+            }
+            dots.forEach(function(d){ d.addEventListener('click', function(){ goTo(Number(d.dataset.idx)); }); });
+            setInterval(function(){ goTo(cur + 1); }, 4500);
+          })();
+        </script>
       </div>
 
       <div class="container hero-grid">
         <div class="hero-content reveal">
           <span class="chip chip-soft">Clínicas de Infusión de Alta Especialidad</span>
           <h1>
-            Infusiones oncológicas <span class="text-gradient">seguras, humanas y accesibles</span>.
+            Transformamos la atención <span class="text-gradient">del cáncer</span>.
           </h1>
           <p class="hero-subtitle">
-            En Sanaré acompañamos cada tratamiento con un equipo especializado, instalaciones cómodas y trazabilidad completa de tu medicamento.
+            Un ecosistema integral que conecta diagnóstico genómico, tratamiento especializado y monitoreo continuo a través de herramientas digitales e inteligencia artificial.
           </p>
           <div class="hero-actions">
             <a href="#pacientes" class="btn btn-primary">Soy paciente</a>
@@ -321,45 +361,45 @@ body.modal-open { overflow: hidden; }
               <p>Experiencia oncológica integral</p>
               <span>Coordinamos tu tratamiento con tu médico y tu aseguradora.</span>
             </div>
-          </div>
-          <div class="hero-badges">
-            <div class="badge-item">
-              <span class="badge-title">Hasta 50% ahorro</span>
-              <span class="badge-sub">vs. hospital tradicional</span>
-            </div>
-            <div class="badge-item">
-              <span class="badge-title">Libre de infecciones</span>
-              <span class="badge-sub">entorno ambulatorio controlado</span>
-            </div>
-          </div>
         </div>
       </div>
     </section>
 
-<!-- ASEGURADORAS -->
+    <!-- ASEGURADORAS -->
     <section class="section insurers">
-      <div class="insurers-bg-video" aria-hidden="true">
-        <video class="insurers-video" autoplay muted loop playsinline preload="metadata">
-          <source src="assets/video/insurers-bubbles.mp4" type="video/mp4" />
-        </video>
-      </div>
       <div class="container">
         <p class="eyebrow">Aseguradoras</p>
         <div class="section-header">
-          <h2>Colaboramos con los principales seguros de gastos médicos mayores.</h2>
-          <p>Coordinamos tu tratamiento con tu póliza nacional e internacional para que te enfoques en lo más importante: tu bienestar.</p>
+          <h2>¿Tu seguro te pide mil trámites? Nosotros los hacemos por ti.</h2>
+          <p>Gestionamos tu Seguro de Gastos Médicos Mayores ante las aseguradoras más importantes. Rápido, claro y sin complicaciones.</p>
         </div>
-        <div class="insurers-grid">
-          <span class="insurer-pill">AXA</span>
-          <span class="insurer-pill">Prevem</span>
-          <span class="insurer-pill">MetLife</span>
-          <span class="insurer-pill">Zurich</span>
-          <span class="insurer-pill">Seguros Sura</span>
-          <span class="insurer-pill">Medi Proses</span>
-          <span class="insurer-pill">OMA</span>
-          <span class="insurer-pill">Atlantis</span>
-          <span class="insurer-pill">Pen Health</span>
-          <span class="insurer-pill">HSBC</span>
+        <div class="insurers-marquee-container">
+          <div class="insurers-marquee-track">
+            <!-- Primer bloque -->
+            <span class="insurer-pill">SURA</span>
+            <span class="insurer-pill">SOFIA SEGUROS</span>
+            <span class="insurer-pill">METLIFE</span>
+            <span class="insurer-pill">ZURICH</span>
+            <span class="insurer-pill">BUPA</span>
+            <span class="insurer-pill">PUNTO PEN</span>
+            <span class="insurer-pill">INBURSA</span>
+            <span class="insurer-pill">PLAN SEGURO</span>
+            <span class="insurer-pill">BBVA</span>
+            <span class="insurer-pill">AXA</span>
+            <span class="insurer-pill">BANRURAL</span>
+            <!-- Segundo bloque (duplicado para scroll infinito) -->
+            <span class="insurer-pill">SURA</span>
+            <span class="insurer-pill">SOFIA SEGUROS</span>
+            <span class="insurer-pill">METLIFE</span>
+            <span class="insurer-pill">ZURICH</span>
+            <span class="insurer-pill">BUPA</span>
+            <span class="insurer-pill">PUNTO PEN</span>
+            <span class="insurer-pill">INBURSA</span>
+            <span class="insurer-pill">PLAN SEGURO</span>
+            <span class="insurer-pill">BBVA</span>
+            <span class="insurer-pill">AXA</span>
+            <span class="insurer-pill">BANRURAL</span>
+          </div>
         </div>
       </div>
     </section>
@@ -380,14 +420,12 @@ body.modal-open { overflow: hidden; }
             validar tu esquema de tratamiento y coordinar la logística con tu médico y aseguradora, incluyendo el apoyo integral en la gestión de documentación, trámites y autorizaciones durante todo tu tratamiento.
           </p>
           <ul class="checklist">
-            <li>Salas de infusión cómodas, silenciosas y con Wi-Fi.</li>
-            <li>Monitoreo continuo de signos vitales durante todo el tratamiento.</li>
-            <li>Farmacovigilancia y trazabilidad completa de cada frasco.</li>
-            <li>Equipo de enfermería certificado en manejo oncológico.</li>
-          
-            <li>Terapias costo-ahorradoras para optimizar el costo sin comprometer el resultado clínico.</li>
-            <li>Apoyo integral en la gestión de documentación ante aseguradoras: trámites, autorizaciones y seguimiento durante todo el tratamiento.</li>
+            <li><strong>Médico de sala:</strong> Monitoreo continuo y atención personalizada durante todo tu tratamiento.</li>
+            <li><strong>Enfermera:</strong> Equipo certificado en manejo oncológico para tu cuidado y bienestar.</li>
+            <li><strong>Responsable Químico:</strong> Farmacovigilancia y trazabilidad completa de cada frasco para tu seguridad.</li>
+            <li><strong>Equipo corporativo:</strong> Funcionarios dedicados a garantizar la calidad y eficiencia en todos los aspectos del servicio.</li>
           </ul>
+          
           <div class="highlight-box">
             <span class="highlight-title">¿Es tu primera infusión?</span>
             <p>Agenda una llamada informativa sin costo para entender tu esquema, tiempos de administración y requisitos.</p>
@@ -402,24 +440,19 @@ body.modal-open { overflow: hidden; }
       <div class="container split-grid split-grid-reverse">
         <div class="split-content reveal">
           <p class="eyebrow">Médicos</p>
-          <h2>Un aliado confiable para tus pacientes oncológicos.</h2>
+          <h2>Somos un aliado confiable para sus pacientes oncológicos.</h2>
           <p>
-            Sanaré integra procesos clínicos, farmacéuticos y administrativos para que tus pacientes reciban su esquema tal como lo indicaste,
+            Sanaré integra procesos clínicos, farmacéuticos y administrativos para que sus pacientes reciban su esquema tal como lo indicó,
             con reportes de seguimiento claros y oportunos.
           </p>
           <div class="feature-grid">
             <div class="feature-card">
               <h3>Coordinación 360°</h3>
-              <p>Gestionamos agenda, infusión, farmacovigilancia y reporte de eventos para mantenerte siempre informado.</p>
+              <p>Gestionamos agenda, infusión, farmacovigilancia y reporte de eventos para mantenerle siempre informado.</p>
             </div>
             <div class="feature-card">
-              <h3>Gestión con aseguradoras</h3>
-              <p>Apoyamos con la documentación y requisitos administrativos para facilitar autorizaciones y reducir fricción para tu equipo.</p>
-            </div>
-
-            <div class="feature-card">
-              <h3>Trazabilidad</h3>
-              <p>Código de lote, fecha de caducidad, cadena de frío y bitácoras de enfermería en un solo reporte.</p>
+              <h3><strong>Monitoreo de pacientes y trazabilidad del medicamento, gestión con aseguradoras</strong></h3>
+              <p>Seguimiento integral de signos vitales, control exacto de medicamentos (lote/caducidad) y apoyo administrativo para facilitar las autorizaciones de sus pacientes.</p>
             </div>
             <div class="feature-card">
               <h3>Modelos flexibles</h3>
@@ -431,8 +464,8 @@ body.modal-open { overflow: hidden; }
           </a>
         </div>
         <div class="split-media reveal delay-1">
-          <video class="split-image" autoplay muted loop playsinline preload="metadata" poster="assets/img/adn-sanare.png">
-            <source src="assets/video/oncologia-adn.mp4" type="video/mp4" />
+          <video class="split-image" autoplay muted loop playsinline preload="metadata" poster="assets/img/paciente-infusion.png">
+            <source src="assets/video/medico.mp4" type="video/mp4" />
           </video>
         </div>
       </div>
@@ -443,61 +476,18 @@ body.modal-open { overflow: hidden; }
       <div class="container">
         <p class="eyebrow" style="text-align: center;">Infraestructura & Tecnología</p>
         <div class="section-header" style="text-align: center; max-width: 800px; margin: 0 auto 4rem;">
-          <h2 style="font-size: 2.8rem; line-height: 1.1;">Experiencia Sanaré: <span class="text-gradient">Tecnología</span> para tu bienestar.</h2>
-          <p>Hemos diseñado un entorno donde la ingeniería y el cuidado médico se unen para ofrecerte el máximo confort durante tu tratamiento.</p>
-        </div>
-
-        <div class="interactive-hub">
-            <!-- BLOQUE SILLÓN -->
-            <div class="hub-item product-showcase">
-                <div style="flex: 1.2;">
-                    <h3 style="font-size: 2.2rem; color: #1d3b53; font-weight: 700;">Confort Supremo</h3>
-                    <p style="color: #6b7280; margin: 1rem 0 2rem;">Nuestro sillón oncológico de alta especialidad garantiza el descanso absoluto.</p>
-                    <ul class="checklist">
-                        <li>Soporte lumbar dinámico</li>
-                        <li>Material grado médico</li>
-                        <li>Ergonomía certificada</li>
-                    </ul>
-                </div>
-                <div style="flex: 1; text-align: right;">
-                    <img src="assets/img/recliner.png" alt="Sillón Sanaré" id="hub-chair-real" style="max-width: 130%; filter: drop-shadow(0 40px 80px rgba(0,0,0,0.1));">
-                </div>
-            </div>
-
-            <!-- BLOQUE SEDES -->
-            <div class="hub-item galleries-showcase">
-                <div>
-                    <h3 style="font-size: 2rem; color: white;">Nuestra Red</h3>
-                    <p style="color: rgba(255,255,255,0.7);">Explora nuestras clínicas interactivamente.</p>
-                </div>
-
-                <div class="sede-tabs-hub" style="display: flex; gap: 0.5rem; margin-top: 1.5rem;">
-                    <button class="btn-sede active" data-sede="narvarte" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; padding: 0.5rem 1rem; border-radius: 50px; cursor: pointer; font-size: 0.8rem;">Narvarte</button>
-                    <button class="btn-sede" data-sede="toluca" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; padding: 0.5rem 1rem; border-radius: 50px; cursor: pointer; font-size: 0.8rem;">Toluca</button>
-                    <button class="btn-sede" data-sede="morelia" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; padding: 0.5rem 1rem; border-radius: 50px; cursor: pointer; font-size: 0.8rem;">Morelia</button>
-                </div>
-
-                <div id="fan-gallery-real" class="fan-gallery-stage">
-                    <!-- Inyectado via JS -->
-                </div>
-
-                <a href="#contacto" class="btn btn-primary" style="background: #f78a7a; border: none; width: 100%; border-radius: 50px;">Agendar en sede</a>
-            </div>
+          <h2 style="font-size: 2.8rem; line-height: 1.1;">Experiencia Sanaré: <span class="text-gradient">Infraestructura</span> para tu bienestar.</h2>
+          <p>Hemos diseñado un entorno donde la relajación y el cuidado médico se unen para ofrecerte el máximo confort durante tu tratamiento.</p>
         </div>
       </div>
     </section>
-
-    <!-- MODAL ZOOM HUB -->
-    <div id="modal-zoom-hub" class="sanare-modal-hub">
-        <img src="" id="modal-img-hub" style="max-width: 90%; max-height: 90vh; border-radius: 8px;">
-    </div>
 
     <!-- EXPERIENCIA -->
     <section class="section section-alt" id="experiencia">
       <div class="container split-grid">
         <div class="split-content reveal">
           <p class="eyebrow">Experiencia Sanaré</p>
-          <h2>Clínicas diseñadas para que el tratamiento se sienta menos hospital y más bienestar.</h2>
+          <h2>Espacios diseñados para que el tratamiento se sienta menos hospital y más bienestar.</h2>
           <p>
             Cada sede Sanaré está pensada para brindar privacidad, comodidad y seguridad. Modelos de atención centrados
             en la persona, no solo en la patología.
@@ -539,16 +529,7 @@ body.modal-open { overflow: hidden; }
               </div>
             </li>
           </ul>
-          <div class="feature-grid experience-grid">
-            <div class="feature-card">
-              <h3>Alianzas estratégicas</h3>
-              <p>Colaboramos con redes de especialistas, instituciones y aliados clínicos para dar continuidad al tratamiento y agilizar procesos clave.</p>
-            </div>
-            <div class="feature-card">
-              <h3>Programas de Soporte al Paciente (PSP)</h3>
-              <p>Integramos PSP para acompañamiento clínico y administrativo; por ejemplo, <strong>MAZ Salud</strong> de AstraZeneca (cuando aplica).</p>
-            </div>
-          </div>
+
 
         </div>
         <div class="split-media reveal delay-1">
@@ -559,84 +540,368 @@ body.modal-open { overflow: hidden; }
       </div>
     </section>
 
-    <!-- SEDES -->
-    <section class="section section-alt" id="sedes">
+    <!-- SEDES Y TECNOLOGÍA -->
+    <section class="section" id="tecnologia-sedes">
       <div class="container">
-        <p class="eyebrow">Sedes</p>
-        <div class="section-header">
-          <h2>Encuentra tu clínica Sanaré más cercana.</h2>
-          <p>Red de clínicas de infusión en crecimiento, diseñadas para que no tengas que interrumpir tu tratamiento.</p>
-        </div>
-        <div class="sede-controls">
-          <label class="field-label" for="sedeFilter">Filtrar por ciudad</label>
-          <select id="sedeFilter" class="select">
-            <option value="all">Todas las sedes</option>
-            <option value="cdmx">CDMX</option>
-            <option value="toluca">Toluca</option>
-            <option value="morelia">Morelia</option>
-          </select>
-        </div>
-        <div class="sedes-grid" id="sedesGrid">
-<!-- MAPA INTERACTIVO (Sedes) -->
-          <div class="sede-map-card" aria-label="Mapa interactivo de sedes Sanaré">
-            <div class="sede-map-wrap" id="sedeMap">
-              <img src="assets/img/mapa-sedes-sanare.png" alt="Mapa de México con sedes Sanaré" />
+        <!-- Mapa + Sedes arriba -->
+        <style>
+          .sedes-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+            gap: 2rem;
+            align-items: center;
+          }
+          @media (max-width: 900px) {
+            .sedes-layout {
+              grid-template-columns: 1fr;
+            }
+          }
+        </style>
+        <div id="sedes" style="margin-bottom:4rem;">
+          <div class="sedes-layout">
+            <!-- Mapa más grande -->
+            <div class="sede-map-card" aria-label="Mapa interactivo de sedes Sanaré" style="max-width:100%; grid-column: auto !important; margin: 0 auto; width: 100%;">
+              <div class="sede-map-wrap" id="sedeMap" style="max-width:750px; margin: 0 auto; width: 100%;">
+                <img src="assets/img/mapa-sedes-sanare.png" alt="Mapa de México con sedes Sanaré" style="width:100%;"/>
+                <button class="sede-pin" type="button" aria-label="Sede Narvarte" data-num="1"
+                  data-title="Narvarte" data-address="Anaxágoras 301 esq. La Morena, Narvarte Poniente, Benito Juárez, 03020, CDMX" data-href="https://share.google/hqGltQ6DWVwLAATW5" data-sede="narvarte"
+                  style="--x:62.50%; --y:61.00%;">
+                  <span class="tip">Narvarte</span>
+                </button>
+                <button class="sede-pin" type="button" aria-label="Sede Toluca" data-num="2"
+                  data-title="Toluca" data-address="Av. Paseo Tollocan 2533, Santa María Totoltepec, 50246 Toluca de Lerdo, Méx." data-href="https://share.google/podUK8kjU8pSvlWzX" data-sede="toluca"
+                  style="--x:58.37%; --y:64.50%;">
+                  <span class="tip">Toluca</span>
+                </button>
+                <button class="sede-pin" type="button" aria-label="Sede Morelia" data-num="3"
+                  data-title="Morelia" data-address="General Pedro María Anaya 551, Chapultepec Sur, C.P. 58260, Morelia, Michoacán" data-href="https://www.google.com/maps/search/?api=1&query=General+Pedro+Mar%C3%ADa+Anaya+551%2C+Chapultepec+Sur%2C+C.P.+58260%2C+Morelia%2C+Michoac%C3%A1n" data-sede="morelia"
+                  style="--x:52.50%; --y:62.30%;">
+                  <span class="tip">Morelia</span>
+                </button>
+                <button class="sede-pin" type="button" aria-label="Sede Tijuana" data-num="4"
+                  data-title="Tijuana" data-address="Boulevard Padre Kino número 10014, interior 304, Zona Urbana Río Tijuana, Tijuana, Baja California, C.P. 22010" data-href="#" data-sede="tijuana"
+                  style="--x:11.50%; --y:10.50%;">
+                  <span class="tip">Tijuana</span>
+                </button>
+                <button class="sede-pin" type="button" aria-label="Sede Santa Fe" data-num="5"
+                  data-title="Santa Fe" data-address="C. Guillermo Gonzalez Camarena 1205, Santa Fe, Zedec Sta Fé, Álvaro Obregón, 01210 Ciudad de México, CDMX. Garden Santa Fé, E1." data-href="#" data-sede="santafe"
+                  style="--x:57.50%; --y:58.00%;">
+                  <span class="tip">Santa Fe</span>
+                </button>
+              </div>
+            </div>
 
-              <button class="sede-pin" type="button" aria-label="Sede CDMX" data-num="1"
-                data-title="CDMX" data-address="Anaxágoras 301 esq. La Morena, Narvarte Poniente, Benito Juárez, 03020, CDMX" data-href="https://share.google/hqGltQ6DWVwLAATW5" data-sede="narvarte"
-                style="--x:59.36%; --y:60.04%;">
-                <span class="tip">CDMX</span>
-              </button>
+            <!-- Tarjetas de sedes -->
+            <div style="display:flex; flex-direction:column; gap:1rem;">
+              <article class="sede-card" data-city="cdmx" style="margin:0;">
+                <h3><span class="sede-num">1</span> Narvarte</h3>
+                <p>Clínica de infusión oncológica con salas privadas y estacionamiento.</p>
+                <ul>
+                  <li>Dirección: Anaxágoras 301 esq. La Morena, CDMX</li>
+                  <li>Teléfono: 55 5255 8403</li>
+                </ul>
+                <a class="btn-link sede-details" href="https://share.google/hqGltQ6DWVwLAATW5" target="_blank" rel="noopener" data-title="Narvarte" data-address="Anaxágoras 301 esq. La Morena, Narvarte Poniente, Benito Juárez, 03020, CDMX" data-sede="narvarte">Ver detalles</a>
+              </article>
 
-              <button class="sede-pin" type="button" aria-label="Sede Toluca" data-num="2"
-                data-title="Toluca" data-address="Av. Paseo Tollocan 2533, Santa María Totoltepec, 50246 Toluca de Lerdo, Méx." data-href="https://share.google/podUK8kjU8pSvlWzX" data-sede="toluca"
-                style="--x:57.37%; --y:64.11%;">
-                <span class="tip">Toluca</span>
-              </button>
+              <article class="sede-card" data-city="toluca" style="margin:0;">
+                <h3><span class="sede-num">2</span> Toluca</h3>
+                <p>Atención oncológica integral con fácil acceso desde vialidades principales.</p>
+                <ul>
+                  <li>Dirección: Av. Paseo Tollocan 2533, Toluca, Méx.</li>
+                  <li>Teléfono: 722 197 0836</li>
+                </ul>
+                <a class="btn-link sede-details" href="https://share.google/podUK8kjU8pSvlWzX" target="_blank" rel="noopener" data-title="Toluca" data-address="Av. Paseo Tollocan 2533, Santa María Totoltepec, 50246 Toluca de Lerdo, Méx." data-sede="toluca">Ver detalles</a>
+              </article>
 
-              <button class="sede-pin" type="button" aria-label="Sede Morelia" data-num="3"
-                data-title="Morelia" data-address="General Pedro María Anaya 551, Chapultepec Sur, C.P. 58260, Morelia, Michoacán" data-href="https://www.google.com/maps/search/?api=1&query=General+Pedro+Mar%C3%ADa+Anaya+551%2C+Chapultepec+Sur%2C+C.P.+58260%2C+Morelia%2C+Michoac%C3%A1n" data-sede="morelia"
-                style="--x:51.76%; --y:62.30%;">
-                <span class="tip">Morelia</span>
-              </button>
+              <article class="sede-card" data-city="morelia" style="margin:0;">
+                <h3><span class="sede-num">3</span> Morelia</h3>
+                <p>Clínica de infusión oncológica con atención cercana y seguimiento.</p>
+                <ul>
+                  <li>Dirección: General Pedro María Anaya 551, Morelia, Mich.</li>
+                  <li>Teléfono: (por confirmar)</li>
+                </ul>
+                <a class="btn-link sede-details" href="https://www.google.com/maps/search/?api=1&query=General+Pedro+María+Anaya+551%2C+Chapultepec+Sur%2C+C.P.+58260%2C+Morelia%2C+Michoacán" target="_blank" rel="noopener" data-title="Morelia" data-address="General Pedro María Anaya 551, Chapultepec Sur, C.P. 58260, Morelia, Michoacán" data-sede="morelia">Ver detalles</a>
+              </article>
+
+              <article class="sede-card" data-city="tijuana" style="margin:0;">
+                <h3><span class="sede-num">4</span> Tijuana</h3>
+                <p>Atención oncológica integral en la Zona Urbana Río Tijuana.</p>
+                <ul>
+                  <li>Dirección: Blvd. Padre Kino #10014, int 304, Zona Urbana Río Tijuana, B.C.</li>
+                  <li>Teléfono: 664 666 0852</li>
+                </ul>
+                <a class="btn-link sede-details" href="#" target="_blank" rel="noopener" data-title="Tijuana" data-address="Boulevard Padre Kino número 10014, interior 304, Zona Urbana Río Tijuana, Tijuana, Baja California, C.P. 22010" data-sede="tijuana">Ver detalles</a>
+              </article>
+
+              <article class="sede-card" data-city="santafe" style="margin:0;">
+                <h3><span class="sede-num">5</span> Santa Fe</h3>
+                <p>Clínica especializada dentro de Garden Santa Fé.</p>
+                <ul>
+                  <li>Dirección: C. Guillermo Gonzalez Camarena 1205, Garden Santa Fé, E1, CDMX.</li>
+                  <li>Teléfono: 55 5292 3559</li>
+                </ul>
+                <a class="btn-link sede-details" href="#" target="_blank" rel="noopener" data-title="Santa Fe" data-address="C. Guillermo Gonzalez Camarena 1205, Santa Fe, Zedec Sta Fé, Álvaro Obregón, 01210 Ciudad de México, CDMX. Garden Santa Fé, E1." data-sede="santafe">Ver detalles</a>
+              </article>
             </div>
           </div>
-<article class="sede-card" data-city="cdmx">
-            <h3><span class="sede-num">1</span> Narvarte</h3>
-            <p>Clínica de infusión oncológica con salas privadas y estacionamiento.</p>
-            <ul>
-              <li>Dirección: Anaxágoras 301 esq. La Morena, Narvarte Poniente, Benito Juárez, 03020, CDMX</li>
-              <li>Teléfono: 55 5255 8403</li>
-              <li>Horario: Lun–Vier · 8:00–5:00</li>
-              <li>Horario: Sab · 8:00–2:00</li>
-            </ul>
-            <a class="btn-link sede-details" href="https://share.google/hqGltQ6DWVwLAATW5" target="_blank" rel="noopener" data-title="Narvarte" data-address="Anaxágoras 301 esq. La Morena, Narvarte Poniente, Benito Juárez, 03020, CDMX" data-sede="narvarte">Ver detalles</a>
-          </article>
+        </div>
 
-<article class="sede-card" data-city="toluca">
-            <h3><span class="sede-num">2</span> Toluca</h3>
-            <p>Atención oncológica integral con fácil acceso desde vialidades principales.</p>
-            <ul>
-              <li>Dirección: Av. Paseo Tollocan 2533, Santa María Totoltepec, 50246 Toluca de Lerdo, Méx.</li>
-              <li>Teléfono: 722 197 0836</li>
-              <li>Horario: Lun–Vier · 8:00–5:00</li>
-              <li>Horario: Sab · 8:00–2:00</li>
-            </ul>
-            <a class="btn-link sede-details" href="https://share.google/podUK8kjU8pSvlWzX" target="_blank" rel="noopener" data-title="Toluca" data-address="Av. Paseo Tollocan 2533, Santa María Totoltepec, 50246 Toluca de Lerdo, Méx." data-sede="toluca">Ver detalles</a>
-          </article>
+        <div class="interactive-hub" style="margin-top:2rem; padding-top:4rem; border-top:1px solid #e5e7eb;">
+            <!-- BLOQUE SILLÓN Y MONITOREO (CARRUSEL) -->
+            <div class="hub-item product-showcase" style="position: relative; padding-bottom: 3rem;">
+                
+                <!-- Slide 1: Sillón -->
+                <div class="showcase-slide" id="slide-1" style="display: flex; flex-wrap: wrap; width: 100%; transition: opacity 0.5s ease-in-out;">
+                    <div style="flex: 1.2; min-width: 200px;">
+                        <h3 style="font-size: 2.2rem; color: #1d3b53; font-weight: 700;">Confort Supremo</h3>
+                        <p style="color: #6b7280; margin: 1rem 0 2rem;">Nuestro sillón oncológico de alta especialidad garantiza el descanso absoluto.</p>
+                        <ul class="checklist">
+                            <li>Soporte lumbar dinámico</li>
+                            <li>Material grado médico</li>
+                            <li>Ergonomía certificada</li>
+                        </ul>
+                    </div>
+                    <div style="flex: 1; text-align: right; min-width: 200px;">
+                        <img src="assets/img/recliner.png" alt="Sillón Sanaré" id="hub-chair-real" style="max-width: 130%; filter: drop-shadow(0 40px 80px rgba(0,0,0,0.1));">
+                    </div>
+                </div>
 
-<article class="sede-card" data-city="morelia">
-            <h3><span class="sede-num">3</span> Morelia</h3>
-            <p>Clínica de infusión oncológica con atención cercana y seguimiento continuo.</p>
-            <ul>
-              <li>Dirección: General Pedro María Anaya 551, Chapultepec Sur, C.P. 58260, Morelia, Michoacán</li>
-              <li>Teléfono: (por confirmar)</li>
-              <li>Horario: Lun–Vier · 8:00–5:00</li>
-              <li>Horario: Sab · 8:00–2:00</li>
-            </ul>
-            <a class="btn-link sede-details" href="https://www.google.com/maps/search/?api=1&query=General+Pedro+Mar%C3%ADa+Anaya+551%2C+Chapultepec+Sur%2C+C.P.+58260%2C+Morelia%2C+Michoac%C3%A1n" target="_blank" rel="noopener" data-title="Morelia" data-address="General Pedro María Anaya 551, Chapultepec Sur, C.P. 58260, Morelia, Michoacán" data-sede="morelia">Ver detalles</a>
-          </article>
+                <!-- Slide 2: Monitoreo -->
+                <div class="showcase-slide" id="slide-2" style="display: none; flex-wrap: wrap; width: 100%; transition: opacity 0.5s ease-in-out; opacity: 0;">
+                    <div style="flex: 1.2; min-width: 200px;">
+                        <h3 style="font-size: 2.2rem; color: #1d3b53; font-weight: 700;">Monitoreo Clínico</h3>
+                        <p style="color: #6b7280; margin: 1rem 0 2rem;">Vigilancia continua en tiempo real de tus signos vitales durante todo el tratamiento.</p>
+                        <ul class="checklist">
+                            <li>Pulsera biométrica inteligente</li>
+                            <li>Seguimiento de oxigenación y pulso</li>
+                            <li>Alerta directa al equipo de sala</li>
+                        </ul>
+                    </div>
+                    <div style="flex: 1; text-align: center; min-width: 200px; display: flex; justify-content: center; align-items: center;">
+                        <img src="assets/img/pulsera-monitoreo.png?v=2" alt="Pulsera de Monitoreo" class="anim-pulsera" style="max-width: 90%; mix-blend-mode: multiply;">
+                    </div>
+                </div>
 
+                <!-- Controles -->
+                <div style="position: absolute; bottom: 1rem; left: 50%; transform: translateX(-50%); display: flex; gap: 0.5rem; z-index: 10;">
+                    <span class="showcase-dot" onclick="switchShowcase(1)" style="width: 12px; height: 12px; border-radius: 50%; background: #1d3b53; cursor: pointer; transition: background 0.3s;" id="dot-1"></span>
+                    <span class="showcase-dot" onclick="switchShowcase(2)" style="width: 12px; height: 12px; border-radius: 50%; background: #cbd5e1; cursor: pointer; transition: background 0.3s;" id="dot-2"></span>
+                </div>
+
+                <script>
+                    let currentSlide = 1;
+                    function switchShowcase(slideNum) {
+                        currentSlide = slideNum;
+                        const s1 = document.getElementById('slide-1');
+                        const s2 = document.getElementById('slide-2');
+                        const d1 = document.getElementById('dot-1');
+                        const d2 = document.getElementById('dot-2');
+                        
+                        if(slideNum === 1) {
+                            s2.style.opacity = '0';
+                            setTimeout(() => { s2.style.display = 'none'; s1.style.display = 'flex'; setTimeout(() => s1.style.opacity = '1', 50); }, 300);
+                            d1.style.background = '#1d3b53';
+                            d2.style.background = '#cbd5e1';
+                        } else {
+                            s1.style.opacity = '0';
+                            setTimeout(() => { s1.style.display = 'none'; s2.style.display = 'flex'; setTimeout(() => s2.style.opacity = '1', 50); }, 300);
+                            d2.style.background = '#1d3b53';
+                            d1.style.background = '#cbd5e1';
+                        }
+                    }
+                    // Auto-cambio cada 5 segundos
+                    setInterval(() => {
+                        switchShowcase(currentSlide === 1 ? 2 : 1);
+                    }, 5000);
+                </script>
+            </div>
+
+            <!-- BLOQUE AMENIDADES -->
+            <div class="hub-item galleries-showcase">
+                <div>
+                    <h3 style="font-size: 2.2rem; color: white; margin-bottom: 0.5rem;">Amenidades</h3>
+                    <p style="color: rgba(255,255,255,0.7); font-size: 1.05rem;">Diseñadas para maximizar tu confort durante el tratamiento.</p>
+                </div>
+
+                <style>
+                  .amenities-grid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+                    gap: 1.5rem;
+                    margin-top: 2rem;
+                    margin-bottom: 2rem;
+                  }
+                  .amenity-item {
+                    background: linear-gradient(145deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01));
+                    border: 1px solid rgba(255, 255, 255, 0.08);
+                    border-radius: 24px;
+                    padding: 1.8rem 1rem;
+                    text-align: center;
+                    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.4s ease;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    gap: 1.2rem;
+                    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+                  }
+                  .amenity-item:hover {
+                    transform: translateY(-8px) scale(1.03);
+                    background: rgba(255, 255, 255, 0.12);
+                    border-color: rgba(255, 255, 255, 0.25);
+                    transition-delay: 0s !important;
+                    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+                  }
+                  .amenity-icon-wrapper {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    transition: transform 0.4s ease;
+                  }
+                  .amenity-item:hover .amenity-icon-wrapper {
+                    transform: translateY(-5px) scale(1.1);
+                  }
+                  .amenity-title {
+                    color: white;
+                    font-size: 1rem;
+                    font-weight: 600;
+                    line-height: 1.3;
+                    margin: 0;
+                  }
+                  .amenity-item.delay-1 { transition-delay: 0.1s; }
+                  .amenity-item.delay-2 { transition-delay: 0.2s; }
+                  .amenity-item.delay-3 { transition-delay: 0.3s; }
+                  .amenity-item.delay-4 { transition-delay: 0.4s; }
+                </style>
+
+                <div class="amenities-grid">
+                  <!-- Wi-Fi -->
+                  <div class="amenity-item reveal">
+                    <div class="amenity-icon-wrapper">
+                      <svg width="56" height="56" viewBox="0 0 24 24" fill="#ffffff" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 18c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" fill="#f78a7a"/>
+                        <path d="M8.46 14.45c1.95-1.94 5.12-1.94 7.07 0l1.41-1.41c-2.73-2.73-7.17-2.73-9.9 0l1.42 1.41z"/>
+                        <path d="M4.93 10.93c3.9-3.9 10.24-3.9 14.14 0l1.41-1.41c-4.68-4.68-12.28-4.68-16.97 0l1.42 1.41z"/>
+                        <path d="M1.39 7.39c5.85-5.85 15.36-5.85 21.21 0l1.41-1.41c-6.63-6.63-17.4-6.63-24.03 0l1.41 1.41z"/>
+                      </svg>
+                    </div>
+                    <p class="amenity-title">Wi-Fi<br>de alta velocidad</p>
+                  </div>
+
+                  <!-- Netflix -->
+                  <div class="amenity-item reveal delay-1">
+                    <div class="amenity-icon-wrapper">
+                      <svg width="56" height="56" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M19.9,10.6h17l19.2,40V10.6h16.4V89.4H55.4L36.2,49v40.4H19.9V10.6z" fill="#E50914"/>
+                        <path d="M36.2,10.6l19.2,40v38.8L36.2,49V10.6z" fill="#B20710"/>
+                      </svg>
+                    </div>
+                    <p class="amenity-title">Netflix &<br>Streaming</p>
+                  </div>
+
+                  <!-- Sillones -->
+                  <div class="amenity-item reveal delay-2">
+                    <div class="amenity-icon-wrapper">
+                      <svg width="56" height="56" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M19 10V7c0-1.66-1.34-3-3-3H8C6.34 4 5 5.34 5 7v3c-1.66 0-3 1.34-3 3v4h2v2h2v-2h12v2h2v-2h2v-4c0-1.66-1.34-3-3-3zM7 7c0-.55.45-1 1-1h8c.55 0 1 .45 1 1v3H7V7z" fill="#ffffff"/>
+                        <path d="M7 10h10v4H7z" fill="#f78a7a"/>
+                      </svg>
+                    </div>
+                    <p class="amenity-title">Sillones<br>Ergonómicos</p>
+                  </div>
+
+                  <!-- Audífonos -->
+                  <div class="amenity-item reveal delay-3">
+                    <div class="amenity-icon-wrapper">
+                      <svg width="56" height="56" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2C6.48 2 2 6.48 2 12v6c0 1.66 1.34 3 3 3h2v-8H5v-2c0-3.87 3.13-7 7-7s7 3.13 7 7v2h-2v8h2c1.66 0 3-1.34 3-3v-6c0-5.52-4.48-10-10-10z" fill="#ffffff"/>
+                        <path d="M5 13h2v6H5zM17 13h2v6h-2z" fill="#f78a7a"/>
+                      </svg>
+                    </div>
+                    <p class="amenity-title">Audífonos<br>Anti Ruido</p>
+                  </div>
+
+                  <!-- Atención -->
+                  <div class="amenity-item reveal delay-4">
+                    <div class="amenity-icon-wrapper">
+                      <svg width="56" height="56" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#ffffff"/>
+                        <path d="M16 9h-3V6h-2v3H8v2h3v3h2v-3h3V9z" fill="#f78a7a"/>
+                      </svg>
+                    </div>
+                    <p class="amenity-title">Atención<br>Personalizada</p>
+                  </div>
+                </div>
+
+                <a href="#contacto" class="btn btn-primary" style="background: #f78a7a; border: none; width: 100%; border-radius: 50px;">Agendar en sede</a>
+            </div>
+
+            <!-- ALIANZA ESTRATÉGICA con Logo Polanco -->
+            <div class="alianza-card" style="grid-column: 1 / -1; display:flex; align-items:center; gap:3rem; background:#f8fafc; border:1px solid #e5e7eb; border-radius:16px; padding:2rem 3rem; margin-top:1rem; flex-wrap:wrap;">
+              <div style="flex:0 0 auto;">
+                <img src="assets/img/logo-polanco.webp" alt="Polanco – Alianza Estratégica" style="max-height:100px; max-width:280px; object-fit:contain; display:block;">
+              </div>
+              <div style="flex:1; min-width:200px;">
+                <h3 style="font-size:1.3rem; color:#1d3b53; margin:0 0 0.5rem; font-weight:700;">Alianza estratégica</h3>
+                <p style="color:#6b7280; margin:0; font-size:1.05rem; line-height:1.5;">Colaboramos con redes de especialistas, instituciones y aliados clínicos para dar continuidad al tratamiento y agilizar procesos clave.</p>
+              </div>
+            </div>
+
+        </div>
+
+      </div>
+    </section>
+
+
+
+<!-- SOCIOS ESTRATÉGICOS -->
+    <section class="section" id="socios" style="background:#fff; overflow:hidden;">
+      <div class="container">
+        <p class="eyebrow" style="text-align:center;">Socios Estratégicos</p>
+        <div class="section-header" style="text-align:center; max-width:680px; margin:0 auto 3rem;">
+          <h2>Respaldados por aliados de clase mundial.</h2>
+          <p>Trabajamos de la mano con líderes del sector farmacéutico y de salud para ofrecer soluciones integrales a nuestros pacientes.</p>
+        </div>
+
+        <style>
+          .socios-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(140px,1fr)); gap:1.5rem; align-items:center; justify-items:center; }
+          .socio-item { position:relative; width:140px; height:90px; display:flex; align-items:center; justify-content:center; cursor:default; }
+          .socio-item img { max-width:120px; max-height:70px; object-fit:contain; transition:opacity 0.3s ease, transform 0.3s ease; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); }
+          .socio-item .img-cafe { opacity:1; }
+          .socio-item .img-color { opacity:0; }
+          .socio-item:hover .img-cafe { opacity:0; }
+          .socio-item:hover .img-color { opacity:1; transform:translate(-50%,-50%) scale(1.08); }
+          @media(max-width:640px){ .socios-grid { grid-template-columns:repeat(3,1fr); gap:1rem; } }
+        </style>
+
+        <div class="socios-grid">
+          <div class="socio-item">
+            <img class="img-cafe" src="assets/img/socios-cafe/ALTAGENIX.png" alt="Altagenix">
+            <img class="img-color" src="assets/img/socios-fullcolor/ALTAGENIX.png" alt="Altagenix">
+          </div>
+          <div class="socio-item">
+            <img class="img-cafe" src="assets/img/socios-cafe/AUGE.png" alt="Auge">
+            <img class="img-color" src="assets/img/socios-fullcolor/AUGE.png" alt="Auge">
+          </div>
+          <div class="socio-item">
+            <img class="img-cafe" src="assets/img/socios-cafe/CIME.png" alt="Cime">
+            <img class="img-color" src="assets/img/socios-fullcolor/CIME.png" alt="Cime">
+          </div>
+          <div class="socio-item">
+            <img class="img-cafe" src="assets/img/socios-cafe/CORE.png" alt="Core">
+            <img class="img-color" src="assets/img/socios-fullcolor/CORE.png" alt="Core">
+          </div>
+          <div class="socio-item">
+            <img class="img-cafe" src="assets/img/socios-cafe/NOMAD.png" alt="Nomad">
+            <img class="img-color" src="assets/img/socios-fullcolor/NOMAD.png" alt="Nomad">
+          </div>
+          <div class="socio-item">
+            <img class="img-cafe" src="assets/img/socios-cafe/PANAM.png" alt="Panam">
+            <img class="img-color" src="assets/img/socios-fullcolor/PANAM.png" alt="Panam">
+          </div>
+          <div class="socio-item">
+            <img class="img-cafe" src="assets/img/socios-cafe/TRINITA.png" alt="Trinita">
+            <img class="img-color" src="assets/img/socios-fullcolor/TRINITA.png" alt="Trinita">
+          </div>
         </div>
       </div>
     </section>
@@ -761,22 +1026,37 @@ body.modal-open { overflow: hidden; }
           </div>
 
           <div class="secondary-card contact-gallery-card">
-            <h3>Conoce nuestras salas de infusión</h3>
-            <p>Vive la experiencia Sanaré: un entorno cálido, seguro y supervisado.</p>
+            <h3>Lo que dicen nuestros pacientes</h3>
+            <p>Reseñas verificadas en Google.</p>
 
-            <div class="sg-carousel" id="contactGallery" aria-label="Carrusel de imágenes Sanaré">
-              <button class="sgc-btn sgc-prev" type="button" aria-label="Anterior">‹</button>
-
-              <div class="sgc-viewport">
-                <div class="sgc-track">
-                  <div class="sgc-slide"><img src="assets/img/gallery-panorama-narvarte.jpg" alt="Sala de infusión Sanaré (panorámica)" loading="lazy" decoding="async"></div>
-                  <div class="sgc-slide"><img src="assets/img/gallery-panorama-toluca.jpg" alt="Sala de infusión Sanaré (panorámica)" loading="lazy" decoding="async"></div>
+            <!-- Widget reseñas Google -->
+            <div style="margin-top:1rem; display:flex; flex-direction:column; gap:1rem;">
+              <div style="background:#f8fafc; border-radius:14px; padding:1rem 1.2rem; border:1px solid #e2e8f0;">
+                <div style="display:flex; align-items:center; gap:8px; margin-bottom:.5rem;">
+                  <svg viewBox="0 0 24 24" width="18" height="18"><path fill="#FBBC05" d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>
+                  <svg viewBox="0 0 24 24" width="18" height="18"><path fill="#FBBC05" d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>
+                  <svg viewBox="0 0 24 24" width="18" height="18"><path fill="#FBBC05" d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>
+                  <svg viewBox="0 0 24 24" width="18" height="18"><path fill="#FBBC05" d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>
+                  <svg viewBox="0 0 24 24" width="18" height="18"><path fill="#FBBC05" d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>
                 </div>
+                <p style="font-size:.88rem; color:#374151; margin:0;">"Excelente atención, el equipo es muy profesional y la clínica muy cómoda. Me sentí acompañada en todo momento."</p>
+                <p style="font-size:.78rem; color:#9ca3af; margin:.5rem 0 0;">— Reseña de Google</p>
               </div>
-
-              <button class="sgc-btn sgc-next" type="button" aria-label="Siguiente">›</button>
-
-              <div class="sgc-dots" aria-label="Paginación del carrusel"></div>
+              <div style="background:#f8fafc; border-radius:14px; padding:1rem 1.2rem; border:1px solid #e2e8f0;">
+                <div style="display:flex; align-items:center; gap:8px; margin-bottom:.5rem;">
+                  <svg viewBox="0 0 24 24" width="18" height="18"><path fill="#FBBC05" d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>
+                  <svg viewBox="0 0 24 24" width="18" height="18"><path fill="#FBBC05" d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>
+                  <svg viewBox="0 0 24 24" width="18" height="18"><path fill="#FBBC05" d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>
+                  <svg viewBox="0 0 24 24" width="18" height="18"><path fill="#FBBC05" d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>
+                  <svg viewBox="0 0 24 24" width="18" height="18"><path fill="#FBBC05" d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>
+                </div>
+                <p style="font-size:.88rem; color:#374151; margin:0;">"Muy buen trato desde el primer contacto, coordinaron todo con mi aseguradora sin complicaciones. 100% recomendado."</p>
+                <p style="font-size:.78rem; color:#9ca3af; margin:.5rem 0 0;">— Reseña de Google</p>
+              </div>
+              <a href="https://g.page/r/sanare-clinica" target="_blank" rel="noopener" style="display:flex; align-items:center; gap:6px; font-size:.85rem; color:#1d3b53; font-weight:600; text-decoration:none; margin-top:.25rem;">
+                <svg viewBox="0 0 24 24" width="16" height="16"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+                Ver todas las reseñas en Google
+              </a>
             </div>
           </div>
 
@@ -846,6 +1126,146 @@ body.modal-open { overflow: hidden; }
     </div>
   </div>
 
+  <!-- SCRIPT DIRECTO PARA PINES DEL MAPA (independiente de main.js) -->
+  <script>
+  (function() {
+    var GALLERY_DATA = {
+      "narvarte": ["assets/img/sedes/narvarte/01.jpg","assets/img/sedes/narvarte/02.jpg","assets/img/sedes/narvarte/03.jpg","assets/img/sedes/narvarte/04.jpg","assets/img/sedes/narvarte/05.jpg","assets/img/sedes/narvarte/06.jpg","assets/img/sedes/narvarte/07.jpg","assets/img/sedes/narvarte/08.jpg","assets/img/sedes/narvarte/09.jpg","assets/img/sedes/narvarte/10.jpg","assets/img/sedes/narvarte/11.jpg","assets/img/sedes/narvarte/12.jpg","assets/img/sedes/narvarte/13.jpg"],
+      "toluca": ["assets/img/sedes/toluca/01.png","assets/img/sedes/toluca/02.png","assets/img/sedes/toluca/03.png","assets/img/sedes/toluca/04.jpg","assets/img/sedes/toluca/05.jpg","assets/img/sedes/toluca/06.jpg","assets/img/sedes/toluca/07.jpg","assets/img/sedes/toluca/08.jpg","assets/img/sedes/toluca/09.jpg"],
+      "morelia": ["assets/img/sedes/morelia/01.jpg","assets/img/sedes/morelia/02.jpg","assets/img/sedes/morelia/03.jpg","assets/img/sedes/morelia/04.jpg","assets/img/sedes/morelia/05.jpg","assets/img/sedes/morelia/06.jpg","assets/img/sedes/morelia/07.jpg","assets/img/sedes/morelia/08.jpg","assets/img/sedes/morelia/09.jpg","assets/img/sedes/morelia/10.jpg"],
+      "tijuana": ["assets/img/sedes/Tijuana/01.jpg","assets/img/sedes/Tijuana/02.png","assets/img/sedes/Tijuana/03.jpg","assets/img/sedes/Tijuana/04.jpg","assets/img/sedes/Tijuana/05.jpg","assets/img/sedes/Tijuana/06.jpg","assets/img/sedes/Tijuana/07.jpg"],
+      "santafe": ["assets/img/sedes/santafe/Gemini_Generated_Image_t7tlvst7tlvst7tl.jpeg"]
+    };
+
+    var currentIdx = 0;
+    var currentImages = [];
+    var timer = null;
+
+    function openModal(title, address, href, sedeKey) {
+      var modal = document.getElementById('mapModal');
+      var track = document.getElementById('sedeGalleryTrack');
+      var thumbs = document.getElementById('sedeGalleryThumbs');
+      var meta = document.getElementById('sedeGalleryMeta');
+      var frame = document.getElementById('mapModalFrame');
+      var titleEl = document.getElementById('mapModalTitle');
+      var openLink = document.getElementById('mapModalOpen');
+
+      if (!modal) { alert('No se encontró el modal'); return; }
+
+      titleEl.textContent = title;
+      openLink.href = (href && href.startsWith('http')) ? href : '#';
+      frame.src = 'https://www.google.com/maps?q=' + encodeURIComponent(address) + '&output=embed';
+
+      currentImages = GALLERY_DATA[sedeKey] || [];
+      currentIdx = 0;
+
+      if (timer) { clearInterval(timer); timer = null; }
+
+      // Renderizar slides
+      track.innerHTML = currentImages.map(function(src, i) {
+        return '<div class="sede-gallery-slide' + (i === 0 ? ' is-active' : '') + '" data-index="' + i + '">' +
+               '<img src="' + src + '" alt="Foto ' + (i+1) + ' de ' + title + '" loading="lazy">' +
+               '</div>';
+      }).join('');
+
+      // Renderizar miniaturas
+      thumbs.innerHTML = currentImages.map(function(src, i) {
+        return '<button class="sede-thumb' + (i === 0 ? ' is-active' : '') + '" type="button" data-index="' + i + '">' +
+               '<img src="' + src + '" alt="Min ' + (i+1) + '" loading="lazy">' +
+               '</button>';
+      }).join('');
+
+      meta.textContent = currentImages.length > 0 ? '1 / ' + currentImages.length : 'Sin fotos';
+
+      function goTo(n) {
+        var slides = Array.from(track.querySelectorAll('.sede-gallery-slide'));
+        var ts = Array.from(thumbs.querySelectorAll('.sede-thumb'));
+        if (!slides.length) return;
+        currentIdx = ((n % slides.length) + slides.length) % slides.length;
+        slides.forEach(function(s, idx) { s.classList.toggle('is-active', idx === currentIdx); });
+        ts.forEach(function(t, idx) { t.classList.toggle('is-active', idx === currentIdx); });
+        meta.textContent = (currentIdx + 1) + ' / ' + slides.length;
+        var at = ts[currentIdx];
+        if (at) at.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
+      }
+
+      thumbs.addEventListener('click', function(e) {
+        var btn = e.target.closest('.sede-thumb');
+        if (btn) { goTo(Number(btn.dataset.index || 0)); if (timer) { clearInterval(timer); timer = null; } }
+      });
+
+      var prevBtn = document.getElementById('sedeGalleryPrev');
+      var nextBtn = document.getElementById('sedeGalleryNext');
+      if (prevBtn) prevBtn.onclick = function() { goTo(currentIdx - 1); if (timer) { clearInterval(timer); timer = null; } };
+      if (nextBtn) nextBtn.onclick = function() { goTo(currentIdx + 1); if (timer) { clearInterval(timer); timer = null; } };
+
+      if (currentImages.length > 1) {
+        timer = setInterval(function() { goTo(currentIdx + 1); }, 4200);
+      }
+
+      document.body.classList.add('modal-open');
+      modal.classList.add('is-open');
+      modal.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeModal() {
+      var modal = document.getElementById('mapModal');
+      var frame = document.getElementById('mapModalFrame');
+      if (!modal) return;
+      modal.classList.remove('is-open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('modal-open');
+      if (frame) frame.src = 'about:blank';
+      if (timer) { clearInterval(timer); timer = null; }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      // Pines del mapa
+      document.querySelectorAll('.sede-pin').forEach(function(pin) {
+        pin.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          openModal(
+            pin.getAttribute('data-title') || 'Sede',
+            pin.getAttribute('data-address') || '',
+            pin.getAttribute('data-href') || '#',
+            pin.getAttribute('data-sede') || ''
+          );
+        });
+      });
+
+      // Botón de detalles en tarjetas
+      document.querySelectorAll('.sede-details').forEach(function(link) {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          openModal(
+            link.getAttribute('data-title') || 'Sede',
+            link.getAttribute('data-address') || '',
+            link.getAttribute('href') || '#',
+            link.getAttribute('data-sede') || ''
+          );
+        });
+      });
+
+      // Cerrar modal
+      var closeBtn = document.getElementById('mapModalClose');
+      if (closeBtn) closeBtn.addEventListener('click', closeModal);
+
+      var modal = document.getElementById('mapModal');
+      if (modal) {
+        modal.addEventListener('click', function(e) {
+          if (e.target && e.target.getAttribute && e.target.getAttribute('data-map-close') === 'true') closeModal();
+        });
+      }
+
+      document.addEventListener('keydown', function(e) {
+        var m = document.getElementById('mapModal');
+        if (e.key === 'Escape' && m && m.classList.contains('is-open')) closeModal();
+      });
+    });
+  })();
+  </script>
+
 
   <div class="toast" id="toast">
     <span class="toast-message" id="toastMessage"></span>
@@ -880,7 +1300,7 @@ body.modal-open { overflow: hidden; }
       </div>
     </div>
 
-<script src="assets/js/main.js?v=navh1"></script>
+<script src="assets/js/main_v2.js"></script>
 
     <!-- n8n embedded chat widget (Lorey) -->
 <script type="module">
@@ -1133,78 +1553,24 @@ function getNativeLauncherDeep() {
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
   <script>
     (function(){
-        const sedesData = {
-            narvarte: ['assets/narvarte/narvarte-001.webp', 'assets/narvarte/narvarte-017.webp', 'assets/narvarte/narvarte-027.webp', 'assets/narvarte/narvarte-038.webp', 'assets/narvarte/narvarte-045.webp'],
-            toluca: ['assets/toluca/toluca-002.webp', 'assets/toluca/toluca-009.webp', 'assets/toluca/toluca-011.webp', 'assets/toluca/toluca-014.webp', 'assets/toluca/toluca-060.webp', 'assets/toluca/toluca-061.webp'],
-            morelia: ['assets/morelia/morelia-001.webp', 'assets/morelia/morelia-005.webp', 'assets/morelia/morelia-010.webp', 'assets/morelia/morelia-018.webp', 'assets/morelia/morelia-021.webp']
-        };
-
         const chair = document.getElementById('hub-chair-real');
-        const container = document.getElementById('fan-gallery-real');
-        const tabs = document.querySelectorAll('.btn-sede');
-        const modal = document.getElementById('modal-zoom-hub');
-        const modalImg = document.getElementById('modal-img-hub');
-
+        
         // Chair Float & Parallax
-        gsap.to(chair, { y: -25, duration: 4, repeat: -1, yoyo: true, ease: "sine.inOut" });
-        window.addEventListener('mousemove', (e) => {
-            const x = (e.clientX / window.innerWidth - 0.5) * 45;
-            gsap.to(chair, { x: -x, rotationY: x/12, duration: 1.5, ease: "power2.out" });
-        });
-
-        // Gallery Logic
-        let currentCards = [];
-        let dragX = 0, targetDragX = 0, isDragging = false, startX = 0;
-
-        function renderSede(name) {
-            container.innerHTML = '';
-            dragX = targetDragX = 0;
-            currentCards = sedesData[name].map((src, i) => {
-                const card = document.createElement('div');
-                card.className = 'fan-card';
-                card.innerHTML = `<img src="${src}">`;
-                container.appendChild(card);
-                card.onclick = () => { modalImg.src = src; modal.style.display = 'flex'; gsap.fromTo(modal, {opacity: 0}, {opacity: 1, duration: 0.4}); };
-                gsap.set(card, { opacity: 0, scale: 0.8, y: 120 });
-                return card;
-            });
-            spread();
-        }
-
-        function spread() {
-            currentCards.forEach((c, i) => {
-                const off = (i - (currentCards.length-1)/2) * 160 + dragX;
-                const rot = (i - (currentCards.length-1)/2) * 12 + (dragX * 0.05);
-                gsap.to(c, { x: off, y: 0, rotation: rot, opacity: 1, scale: 1, duration: 1.2, ease: "expo.out", delay: i*0.06 });
-            });
-        }
-
-        setInterval(() => { if(!isDragging) targetDragX = (Math.random()-0.5)*100; }, 5000);
-
-        container.onmousedown = (e) => { isDragging = true; startX = e.clientX; container.style.cursor = 'grabbing'; };
-        window.onmousemove = (e) => { if(isDragging) { targetDragX += (e.clientX - startX); startX = e.clientX; } };
-        window.onmouseup = () => { isDragging = false; container.style.cursor = 'default'; };
-
-        function loop() { dragX += (targetDragX - dragX) * 0.1; currentCards.forEach((c, i) => { const off = (i - (currentCards.length-1)/2) * 160 + dragX; const rot = (i - (currentCards.length-1)/2) * 12 + (dragX * 0.05); gsap.set(c, {x: off, rotation: rot}); }); requestAnimationFrame(loop); }
-        loop();
-
-        tabs.forEach(t => t.onclick = (e) => {
-            e.preventDefault();
-            tabs.forEach(b => b.classList.remove('active'));
-            t.classList.add('active');
-            gsap.to(currentCards, { opacity: 0, scale: 0.8, y: -100, duration: 0.6, onComplete: () => renderSede(t.dataset.sede)});
-        });
-
-        modal.onclick = () => gsap.to(modal, {opacity: 0, duration: 0.3, onComplete: () => modal.style.display = 'none'});
-
-        if(window.ScrollTrigger) {
-            ScrollTrigger.create({ trigger: "#tratamientos", start: "top center", onEnter: () => renderSede('narvarte'), once: true });
-        } else {
-            renderSede('narvarte');
+        if (chair) {
+          gsap.to(chair, { y: -25, duration: 4, repeat: -1, yoyo: true, ease: "sine.inOut" });
+          window.addEventListener('mousemove', (e) => {
+              const x = (e.clientX / window.innerWidth - 0.5) * 45;
+              gsap.to(chair, { x: -x, rotationY: x/12, duration: 1.5, ease: "power2.out" });
+          });
         }
     })();
   </script>
 
-  <script src="assets/js/main.js?v=navh1"></script>
+  
 </body>
 </html>
+
+
+
+
+
