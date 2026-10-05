@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
@@ -354,7 +354,7 @@ body.modal-open { overflow: hidden; }
         </div>
         <div class="hero-media reveal delay-1">
           <div class="hero-card">
-            <video class="hero-image hero-video" autoplay muted loop playsinline webkit-playsinline preload="metadata" poster="assets/img/hero-sanare.png">
+            <video class="hero-image hero-video" autoplay muted loop playsinline webkit-playsinline preload="auto" poster="assets/img/hero-sanare.png">
               <source src="assets/video/hero.mp4" type="video/mp4">
             </video>
             <div class="hero-floating-card">
@@ -408,7 +408,7 @@ body.modal-open { overflow: hidden; }
     <section class="section section-split" id="pacientes">
       <div class="container split-grid">
         <div class="split-media reveal">
-          <video class="split-image" autoplay muted loop playsinline webkit-playsinline preload="metadata" poster="assets/img/paciente-infusion.png">
+          <video class="split-image" autoplay muted loop playsinline webkit-playsinline preload="auto" poster="assets/img/paciente-infusion.png">
             <source src="assets/video/paciente-infusion.mp4" type="video/mp4" />
           </video>
         </div>
@@ -464,7 +464,7 @@ body.modal-open { overflow: hidden; }
           </a>
         </div>
         <div class="split-media reveal delay-1">
-          <video class="split-image" autoplay muted loop playsinline webkit-playsinline preload="metadata" poster="assets/img/paciente-infusion.png">
+          <video class="split-image" autoplay muted loop playsinline webkit-playsinline preload="auto" poster="assets/img/paciente-infusion.png">
             <source src="assets/video/medico.mp4" type="video/mp4" />
           </video>
         </div>
@@ -533,7 +533,7 @@ body.modal-open { overflow: hidden; }
 
         </div>
         <div class="split-media reveal delay-1">
-          <video class="split-image shadow-xl" autoplay muted loop playsinline webkit-playsinline preload="metadata" poster="assets/img/clinica-sanare.png">
+          <video class="split-image shadow-xl" autoplay muted loop playsinline webkit-playsinline preload="auto" poster="assets/img/clinica-sanare.png">
             <source src="assets/video/instalaciones-sanare.mp4" type="video/mp4" />
           </video>
         </div>
@@ -863,14 +863,18 @@ body.modal-open { overflow: hidden; }
         </div>
 
         <style>
-          .socios-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(140px,1fr)); gap:1.5rem; align-items:center; justify-items:center; }
-          .socio-item { position:relative; width:140px; height:90px; display:flex; align-items:center; justify-content:center; cursor:default; }
-          .socio-item img { max-width:120px; max-height:70px; object-fit:contain; transition:opacity 0.3s ease, transform 0.3s ease; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); }
+          .socios-grid { display:flex; flex-wrap:wrap; justify-content:center; gap:1.2rem; align-items:center; }
+          .socio-item { position:relative; width:130px; height:80px; display:flex; align-items:center; justify-content:center; cursor:default; }
+          .socio-item img { max-width:110px; max-height:65px; object-fit:contain; transition:opacity 0.3s ease, transform 0.3s ease; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); }
           .socio-item .img-cafe { opacity:1; }
           .socio-item .img-color { opacity:0; }
           .socio-item:hover .img-cafe { opacity:0; }
           .socio-item:hover .img-color { opacity:1; transform:translate(-50%,-50%) scale(1.08); }
-          @media(max-width:640px){ .socios-grid { grid-template-columns:repeat(3,1fr); gap:1rem; } }
+          @media(max-width:640px){
+            .socios-grid { gap:1rem; padding:0 0.5rem; }
+            .socio-item { width:90px; height:60px; }
+            .socio-item img { max-width:80px; max-height:50px; }
+          }
         </style>
 
         <div class="socios-grid">
