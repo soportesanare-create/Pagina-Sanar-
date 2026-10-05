@@ -152,7 +152,7 @@ a {
   display: block;
 }
 
-/* Fondo blur (rellena laterales/arriba/abajo sin verse â€œblancoâ€) */
+/* Fondo blur (rellena laterales/arriba/abajo sin verse “blanco”) */
 .hero-top-banner::before{
   content: "";
   position: absolute;
@@ -163,7 +163,7 @@ a {
   opacity: 0.95;
 }
 
-/* Capa ligera para mantener look SanarÃ© */
+/* Capa ligera para mantener look Sanaré */
 .hero-top-banner::after{
   content: "";
   position: absolute;
@@ -533,7 +533,7 @@ a {
   align-items: center;
 }
 
-/* Pacientes: mantener el mismo â€œaireâ€ incluso con mÃ¡s bullets (mÃ¡s ancho de texto = menos saltos de lÃ­nea) */
+/* Pacientes: mantener el mismo “aire” incluso con más bullets (más ancho de texto = menos saltos de línea) */
 #pacientes .split-grid{
   grid-template-columns: minmax(0, 1.05fr) minmax(0, 1.05fr);
 }
@@ -578,7 +578,7 @@ a {
 }
 
 .checklist li::before {
-  content: "âœ“";
+  content: "✓";
   position: absolute;
   left: 0;
   top: 0.05rem;
@@ -1499,7 +1499,7 @@ content: attr(data-num);
   width: 30px;
   height: 30px;
   border-radius: 999px;
-  background: #7A4B3A; /* cafÃ© */
+  background: #7A4B3A; /* café */
   border: 3px solid rgba(255,255,255,.95);
   color: #fff;
   font-weight: 900;
@@ -1565,7 +1565,7 @@ position: absolute;
 }
 
 
-/* NÃºmero de sede en tarjetas */
+/* Número de sede en tarjetas */
 .sede-card h3{
   display:flex;
   align-items:center;
@@ -1671,13 +1671,13 @@ position: absolute;
 /* === Ajuste solicitado: ocultar cifras del hero === */
 .hero-meta{display:none !important;}
 
-/* Ocultar el bloque de indicadores (4.9â˜…, +800, +2) en la secciÃ³n Experiencia, sin eliminarlo del HTML */
+/* Ocultar el bloque de indicadores (4.9★, +800, +2) en la sección Experiencia, sin eliminarlo del HTML */
 .pill-stats {
   display: none !important;
 }
 
 
-/* Modal de sedes: galerÃ­a + mapa */
+/* Modal de sedes: galería + mapa */
 .sede-modal-body{
   display: grid;
   grid-template-columns: minmax(0, 1.05fr) minmax(320px, .95fr);
@@ -1828,7 +1828,7 @@ position: absolute;
 }
 
 /* ==========================================================================
-   SECCIÃ“N DE DESCARGA DE APP (SANARÃ‰ MÃ“VIL)
+   SECCIÓN DE DESCARGA DE APP (SANARÉ MÓVIL)
    ========================================================================== */
 #descargar-app {
   border-top: 1px solid rgba(248, 138, 122, 0.14);
@@ -1874,14 +1874,14 @@ position: absolute;
   }
 
   #descargar-app .split-media {
-    order: -1; /* Muestra el telÃ©fono arriba en pantallas mÃ³viles */
+    order: -1; /* Muestra el teléfono arriba en pantallas móviles */
   }
 }
 
 
 @media (max-width: 768px) { #sedes > div > div { grid-template-columns: 1fr !important; } }
 
-/* Aseguradoras Marquee Animaciï¿½n */
+/* Aseguradoras Marquee Animaci�n */
 .insurers-marquee-container {
   overflow: hidden;
   white-space: nowrap;
@@ -1943,7 +1943,7 @@ position: absolute;
   color: #3b82f6; /* color azul diferente al acento original */
 }
 
-/* Animaciï¿½n de la Pulsera */
+/* Animaci�n de la Pulsera */
 @keyframes pulse-float {
   0% { transform: translateY(0) scale(1); filter: drop-shadow(0 15px 25px rgba(0,0,0,0.15)); }
   50% { transform: translateY(-12px) scale(1.03); filter: drop-shadow(0 25px 35px rgba(0, 255, 0, 0.25)); }
