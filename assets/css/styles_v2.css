@@ -1,4 +1,4 @@
-﻿:root {
+:root {
   --color-primary: #f78a7a;
   --color-primary-dark: #e06655;
   --color-secondary: #1d3b53;
@@ -1283,6 +1283,25 @@ a {
 
   .hero-card {
     border-radius: 1.4rem;
+    display: flex;
+    flex-direction: column;
+    overflow: visible;
+  }
+
+  /* En móvil: sacar el floating card de posición absoluta y subirlo arriba */
+  .hero-floating-card {
+    position: relative;
+    inset: auto;
+    order: -1;
+    margin: 0 0 0.75rem 0;
+    border-radius: 1rem;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+  }
+
+  /* El video queda abajo */
+  .hero-image, .hero-video {
+    order: 0;
+    border-radius: 1.2rem;
   }
 
   .hero-image {
