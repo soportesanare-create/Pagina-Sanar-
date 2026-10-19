@@ -2014,17 +2014,176 @@ position: absolute;
   }
 }
 
-/* Card de Alianza Estrategica: logo centrado en movil */
-@media (max-width: 640px) {
+/* ==========================================================================
+   ALIANZA ESTRATÉGICA (Polanco / SYNLAB + PET / CT UNAM)
+   ========================================================================== */
+.alianza-card {
+  grid-column: 1 / -1;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+  padding: 2.2rem 2.5rem;
+  margin-top: 1.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+}
+
+.alianza-header {
+  text-align: left;
+  margin-bottom: 1.8rem;
+}
+
+.alianza-header h3 {
+  font-size: 1.35rem;
+  color: var(--color-secondary, #1d3b53);
+  margin: 0 0 0.5rem;
+  font-weight: 700;
+}
+
+.alianza-header p {
+  color: #64748b;
+  margin: 0;
+  font-size: 1.02rem;
+  line-height: 1.55;
+  max-width: 720px;
+}
+
+.alianza-items {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.alianza-item {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 1.6rem 1.8rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.alianza-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+}
+
+.alianza-item-top {
+  display: flex;
+  align-items: center;
+  min-height: 55px;
+  margin-bottom: 1rem;
+}
+
+.alianza-item-top img {
+  max-height: 52px;
+  max-width: 220px;
+  object-fit: contain;
+  display: block;
+}
+
+.pet-badge-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pet-badge {
+  display: inline-block;
+  background: rgba(247, 138, 122, 0.15);
+  color: #e06655;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(247, 138, 122, 0.3);
+}
+
+.pet-title {
+  margin: 0;
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: var(--color-secondary, #1d3b53);
+  letter-spacing: 0.5px;
+}
+
+.alianza-item-content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: space-between;
+}
+
+.alianza-item-desc {
+  color: #475569;
+  font-size: 0.98rem;
+  line-height: 1.5;
+  margin: 0 0 1.2rem;
+}
+
+.alianza-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #f78a7a !important;
+  color: #ffffff !important;
+  font-weight: 600;
+  font-size: 0.92rem;
+  padding: 0.6rem 1.6rem;
+  border-radius: 50px;
+  text-decoration: none;
+  border: none;
+  align-self: flex-start;
+  box-shadow: 0 4px 12px rgba(247, 138, 122, 0.25);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.alianza-btn:hover {
+  background: #e06655 !important;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(247, 138, 122, 0.35);
+}
+
+@media (max-width: 768px) {
   .alianza-card {
-    flex-direction: column !important;
-    align-items: center !important;
-    text-align: center !important;
-    padding: 1.5rem !important;
-    gap: 1.5rem !important;
+    padding: 1.5rem 1.2rem !important;
+    margin-top: 1.2rem;
+    text-align: center;
   }
-  .alianza-card img {
-    max-width: 180px !important;
+  .alianza-header {
+    text-align: center;
+    margin-bottom: 1.4rem;
+  }
+  .alianza-header p {
+    font-size: 0.95rem;
+  }
+  .alianza-items {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+  }
+  .alianza-item {
+    padding: 1.4rem 1.2rem;
+    align-items: center;
+    text-align: center;
+  }
+  .alianza-item-top {
+    justify-content: center;
+    min-height: auto;
+  }
+  .alianza-item-top img {
+    max-height: 48px;
+    max-width: 190px;
+  }
+  .pet-badge-wrapper {
+    justify-content: center;
+  }
+  .alianza-btn {
+    align-self: center;
+    width: 100%;
+    max-width: 220px;
   }
 }
 
